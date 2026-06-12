@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Eyes Gang — CRM Collections</title>
+<title>Eyes Gang - CRM Collections</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -73,7 +73,6 @@ tr:last-child td{border-bottom:none}tr:hover td{background:var(--gold-f)}
 .empty{text-align:center;padding:40px;color:var(--ink3)}
 .toast{position:fixed;bottom:20px;right:20px;background:var(--ink);color:#fff;padding:10px 16px;border-radius:var(--r2);font-size:12px;z-index:999;opacity:0;transition:opacity .2s;pointer-events:none;max-width:300px}
 .toast.show{opacity:1}
-.loading{display:flex;align-items:center;justify-content:center;height:200px;gap:12px;color:var(--ink3);font-size:14px}
 @media(max-width:680px){.dg{grid-template-columns:1fr}.fr2{grid-template-columns:1fr}main{padding:16px 10px}header{padding:0 12px}.hdate{display:none}}
 @media print{header,nav,.no-print{display:none!important}body{background:#fff}.tab{display:block!important}}
 </style>
@@ -90,14 +89,14 @@ tr:last-child td{border-bottom:none}tr:hover td{background:var(--gold-f)}
   </div>
 </header>
 <nav>
-  <button class="ntab on" onclick="goTab('dashboard',this)">&#127968; Tableau de bord</button>
-  <button class="ntab" onclick="goTab('envois',this)">&#128230; Envois</button>
-  <button class="ntab" onclick="goTab('retours',this)">&#128260; Retours</button>
-  <button class="ntab" onclick="goTab('collections',this)">&#128083; Collections</button>
-  <button class="ntab" onclick="goTab('agents',this)">&#128101; Agents</button>
+  <button class="ntab on" onclick="goTab('dashboard',this)">Tableau de bord</button>
+  <button class="ntab" onclick="goTab('envois',this)">Envois</button>
+  <button class="ntab" onclick="goTab('retours',this)">Retours</button>
+  <button class="ntab" onclick="goTab('collections',this)">Collections</button>
+  <button class="ntab" onclick="goTab('agents',this)">Agents</button>
 </nav>
 <main>
-  <div id="tab-dashboard" class="tab on"><div class="loading">Connexion a Firebase...</div></div>
+  <div id="tab-dashboard" class="tab on"><div style="text-align:center;padding:60px;color:var(--ink3)">Connexion a Firebase...</div></div>
   <div id="tab-envois" class="tab"></div>
   <div id="tab-retours" class="tab"></div>
   <div id="tab-collections" class="tab"></div>
@@ -105,8 +104,10 @@ tr:last-child td{border-bottom:none}tr:hover td{background:var(--gold-f)}
 </main>
 <div class="toast" id="toast"></div>
 <script type="module">
+
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
 import { getDatabase, ref, set, onValue } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
+
 const firebaseConfig = {
   apiKey: "AIzaSyC0vReG1muG4cmAJAW1H6VJ0Ai48vdWOCY",
   authDomain: "crmagents-9c3b5.firebaseapp.com",
@@ -141,7 +142,10 @@ let db, dataRef, saveTimer;
 
 function buildEmpty(){
   const d={envois:[],retours:{},collections:{}};
-  AGENTS.forEach(a=>{d.retours[a.id]=[];d.collections[a.id]=MASTER.map(p=>({...p,addedAt:'2025-01-01'}));});
+  AGENTS.forEach(a=>{
+    d.retours[a.id]=[];
+    d.collections[a.id]=MASTER.map(p=>({...p,addedAt:'2025-01-01'}));
+  });
   return d;
 }
 
@@ -202,6 +206,7 @@ function scheduleSave(){
   }, 600);
 }
 
+// Utils
 const uid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
 const today=()=>new Date().toISOString().split('T')[0];
 const fd=d=>{if(!d)return'-';const p=d.split('-');return p.length===3?p[2]+'/'+p[1]+'/'+p[0]:d};
@@ -213,19 +218,17 @@ function updateDate(){
   const d=new Date(), el=qs('#hdate');
   if(el) el.innerHTML=d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'})+'<br><strong>'+d.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})+'</strong>';
 }
-function catPill(c){
-  const k=c==='LAST CHANCE'?'LAST':c;
-  return '<span class="cp c'+k+'">'+c+'</span>';
-}
+function catClass(c){ return c==='LAST CHANCE'?'LAST':c; }
+function catPill(c){ return `<span class="cp c${catClass(c)}">${c}</span>`; }
 updateDate(); setInterval(updateDate,30000);
 
+// Tabs
 window.goTab=function(t,btn){
   S.tab=t;
   qsa('.ntab').forEach(b=>b.classList.remove('on'));
   if(btn) btn.classList.add('on');
   qsa('.tab').forEach(el=>el.classList.remove('on'));
-  const el=qs('#tab-'+t);
-  if(el) el.classList.add('on');
+  const el=qs('#tab-'+t); if(el) el.classList.add('on');
   renderCurrent();
 };
 function renderCurrent(){
@@ -234,59 +237,67 @@ function renderCurrent(){
 }
 function renderAll(){renderDashboard();renderEnvois();renderRetours();renderCollections();renderAgents();}
 
+// ---- DASHBOARD ----
 function renderDashboard(){
   const el=qs('#tab-dashboard'); if(!el) return;
   const allR=AGENTS.flatMap(a=>S.data.retours[a.id]||[]);
   const pend=allR.filter(r=>r.statut==='attente').length;
   const recu=allR.filter(r=>r.statut==='recu').length;
   const totalC=AGENTS.reduce((s,a)=>s+(S.data.collections[a.id]||[]).length,0);
-  let html='<div class="ph"><div><div class="ptitle">Tableau de bord</div><div class="pdesc">Vue d'ensemble - synchronise en temps reel</div></div>';
-  html+='<div style="display:flex;gap:8px" class="no-print">';
-  html+='<button class="btn pr sm" onclick="doPrint('envois')">Imprimer Envois</button>';
-  html+='<button class="btn pr sm" onclick="doPrint('retours')">Imprimer Retours</button>';
-  html+='</div></div>';
-  html+='<div class="stats">';
-  html+='<div class="sc"><div class="sv" style="color:var(--gold)">'+S.data.envois.length+'</div><div class="sl">Envois total</div></div>';
-  html+='<div class="sc"><div class="sv" style="color:var(--red)">'+pend+'</div><div class="sl">Retours en attente</div></div>';
-  html+='<div class="sc"><div class="sv" style="color:var(--green)">'+recu+'</div><div class="sl">Retours recus</div></div>';
-  html+='<div class="sc"><div class="sv">'+totalC+'</div><div class="sl">Modeles en stock</div></div>';
-  html+='</div><div class="dg">';
-  html+='<div class="card"><div class="chdr"><span class="chtitle">Agents</span></div>';
+
+  let agentsRows='';
   AGENTS.forEach(a=>{
     const nc=(S.data.collections[a.id]||[]).length;
     const np=(S.data.retours[a.id]||[]).filter(r=>r.statut==='attente').length;
-    html+='<div style="display:flex;align-items:center;justify-content:space-between;padding:9px 14px;border-bottom:1px solid var(--bdr)">';
-    html+='<div style="display:flex;align-items:center;gap:9px">';
-    html+='<div style="width:30px;height:30px;border-radius:50%;background:'+a.color+';display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#fff">'+a.name[0]+'</div>';
-    html+='<div><div style="font-weight:600;font-size:13px">'+a.name+'</div><div style="font-size:11px;color:var(--ink3)">'+a.region+'</div></div>';
-    html+='</div><div style="font-size:11px;color:var(--ink2)">'+nc+' modeles - <span style="color:var(--red)">'+np+' en attente</span></div></div>';
+    agentsRows+=`<div style="display:flex;align-items:center;justify-content:space-between;padding:9px 14px;border-bottom:1px solid var(--bdr)">
+      <div style="display:flex;align-items:center;gap:9px">
+        <div style="width:30px;height:30px;border-radius:50%;background:${a.color};display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#fff">${a.name[0]}</div>
+        <div><div style="font-weight:600;font-size:13px">${a.name}</div><div style="font-size:11px;color:var(--ink3)">${a.region}</div></div>
+      </div>
+      <div style="font-size:11px;color:var(--ink2)">${nc} modeles - <span style="color:var(--red)">${np} en attente</span></div>
+    </div>`;
   });
-  html+='</div>';
+
   const pendList=AGENTS.flatMap(a=>(S.data.retours[a.id]||[]).filter(r=>r.statut==='attente').map(r=>({...r,aname:a.name,acolor:a.color})));
-  html+='<div class="card"><div class="chdr"><span class="chtitle">Retours en attente</span></div>';
-  if(!pendList.length){ html+='<div class="empty" style="padding:20px">Aucun retour en attente</div>'; }
-  else { pendList.slice(0,8).forEach(r=>{
-    html+='<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 14px;border-bottom:1px solid var(--bdr)">';
-    html+='<div><div style="font-size:12px;font-weight:600">'+r.modele+(r.couleur?' - '+r.couleur:'')+'</div>';
-    html+='<div style="font-size:11px;color:var(--ink3)">Demande le '+fd(r.date_demande)+'</div></div>';
-    html+='<span class="ap" style="background:'+r.acolor+'">'+r.aname+'</span></div>';
-  }); }
-  html+='</div></div>';
+  let pendRows = pendList.length===0 ? `<div class="empty" style="padding:20px">Aucun retour en attente</div>` :
+    pendList.slice(0,8).map(r=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 14px;border-bottom:1px solid var(--bdr)">
+      <div><div style="font-size:12px;font-weight:600">${r.modele}${r.couleur?' - '+r.couleur:''}</div>
+      <div style="font-size:11px;color:var(--ink3)">Demande le ${fd(r.date_demande)}</div></div>
+      <span class="ap" style="background:${r.acolor}">${r.aname}</span>
+    </div>`).join('');
+
   const acts=[
-    ...S.data.envois.map(e=>({d:e.date,t:'Envoi - '+e.modele+(e.couleur?' ('+e.couleur+')')+'',c:'#c9a84c'})),
-    ...AGENTS.flatMap(a=>(S.data.retours[a.id]||[]).map(r=>({d:r.date_demande,t:'Retour '+r.modele+' / '+a.name,c:'#3a7bd5'})))
+    ...S.data.envois.map(e=>({d:e.date,t:`Envoi - ${e.modele}${e.couleur?' ('+e.couleur+')':''}`,c:'#c9a84c'})),
+    ...AGENTS.flatMap(a=>(S.data.retours[a.id]||[]).map(r=>({d:r.date_demande,t:`Retour ${r.modele} / ${a.name}`,c:'#3a7bd5'})))
   ].sort((a,b)=>(b.d||'').localeCompare(a.d||'')).slice(0,12);
-  html+='<div class="card"><div class="chdr"><span class="chtitle">Activite recente</span></div>';
-  if(!acts.length){ html+='<div class="empty" style="padding:16px">Aucune activite.</div>'; }
-  else { acts.forEach(i=>{
-    html+='<div style="display:flex;gap:10px;padding:8px 14px;border-bottom:1px solid var(--bdr);align-items:flex-start">';
-    html+='<div style="width:6px;height:6px;border-radius:50%;background:'+i.c+';margin-top:5px;flex-shrink:0"></div>';
-    html+='<div><div style="font-size:12px">'+i.t+'</div><div style="font-size:11px;color:var(--ink3)">'+fd(i.d)+'</div></div></div>';
-  }); }
-  html+='</div>';
-  el.innerHTML=html;
+  const actRows = acts.length===0 ? `<div class="empty" style="padding:16px">Aucune activite.</div>` :
+    acts.map(i=>`<div style="display:flex;gap:10px;padding:8px 14px;border-bottom:1px solid var(--bdr);align-items:flex-start">
+      <div style="width:6px;height:6px;border-radius:50%;background:${i.c};margin-top:5px;flex-shrink:0"></div>
+      <div><div style="font-size:12px">${i.t}</div><div style="font-size:11px;color:var(--ink3)">${fd(i.d)}</div></div>
+    </div>`).join('');
+
+  el.innerHTML=`
+  <div class="ph">
+    <div><div class="ptitle">Tableau de bord</div><div class="pdesc">Vue generale - synchronise en temps reel</div></div>
+    <div style="display:flex;gap:8px" class="no-print">
+      <button class="btn pr sm" onclick="doPrint('envois')">Imprimer Envois</button>
+      <button class="btn pr sm" onclick="doPrint('retours')">Imprimer Retours</button>
+    </div>
+  </div>
+  <div class="stats">
+    <div class="sc"><div class="sv" style="color:var(--gold)">${S.data.envois.length}</div><div class="sl">Envois total</div></div>
+    <div class="sc"><div class="sv" style="color:var(--red)">${pend}</div><div class="sl">Retours en attente</div></div>
+    <div class="sc"><div class="sv" style="color:var(--green)">${recu}</div><div class="sl">Retours recus</div></div>
+    <div class="sc"><div class="sv">${totalC}</div><div class="sl">Modeles en stock</div></div>
+  </div>
+  <div class="dg">
+    <div class="card"><div class="chdr"><span class="chtitle">Agents</span></div>${agentsRows}</div>
+    <div class="card"><div class="chdr"><span class="chtitle">Retours en attente</span></div>${pendRows}</div>
+  </div>
+  <div class="card"><div class="chdr"><span class="chtitle">Activite recente</span></div>${actRows}</div>`;
 }
 
+// ---- ENVOIS ----
 function renderEnvois(){
   const el=qs('#tab-envois'); if(!el) return;
   let data=[...S.data.envois];
@@ -295,63 +306,76 @@ function renderEnvois(){
   data.sort((a,b)=>(b.date||'').localeCompare(a.date||''));
   const mods=[...new Set(MASTER.map(p=>p.modele))].sort();
   const cols=[...new Set(MASTER.map(p=>p.couleur).filter(Boolean))].sort();
-  let html='<div class="ph"><div><div class="ptitle">Envois</div><div class="pdesc">Modeles envoyes aux agents</div></div>';
-  html+='<div style="display:flex;gap:8px" class="no-print">';
-  html+='<button class="btn pr sm" onclick="doPrint('envois')">Imprimer</button>';
-  html+='<button class="btn g sm" onclick="openEnvoiForm()">+ Nouvel envoi</button>';
-  html+='</div></div><div id="envoi-form-zone"></div>';
-  html+='<div class="fbar"><span class="fc'+(S.envoisFilter==='all'?' on':'')+'" onclick="S.envoisFilter='all';renderEnvois()">Tous</span>';
-  AGENTS.forEach(a=>{ html+='<span class="fc'+(S.envoisFilter===a.id?' on':'')+'" onclick="S.envoisFilter=''+a.id+'';renderEnvois()">'+a.name+'</span>'; });
-  html+='</div>';
-  html+='<div class="card"><div class="chdr">';
-  html+='<input style="width:190px;font-size:12px" placeholder="Rechercher..." value="'+S.envoisSearch+'" oninput="S.envoisSearch=this.value;renderEnvois()">';
-  html+='<span style="font-size:11px;color:var(--ink3)">'+data.length+' resultat(s)</span></div>';
-  html+='<div class="twrap"><table><thead><tr><th>Date</th><th>Modele</th><th>Couleur</th><th>Pieces</th><th>Agent(s)</th><th>Notes</th><th class="no-print"></th></tr></thead><tbody>';
-  if(data.length){
-    data.forEach(e=>{
-      html+='<tr><td>'+fd(e.date)+'</td><td><strong>'+e.modele+'</strong></td><td>'+(e.couleur||'-')+'</td>';
-      html+='<td><span class="badge ba">'+e.pieces+' pcs</span></td><td>';
-      e.agents.forEach(id=>{ const a=byId(id); html+='<span class="ap" style="background:'+(a?a.color:'#888')+'">'+(a?a.name:id)+'</span>'; });
-      html+='</td><td style="color:var(--ink3);max-width:120px;font-size:11px">'+(e.notes||'-')+'</td>';
-      html+='<td class="no-print" style="white-space:nowrap">';
-      html+='<button class="btn xs" onclick="openEnvoiForm(''+e.id+'')">Editer</button> ';
-      html+='<button class="btn xs d" onclick="delEnvoi(''+e.id+'')">Suppr</button></td></tr>';
-    });
-  } else { html+='<tr><td colspan="7" class="empty">Aucun envoi.</td></tr>'; }
-  html+='</tbody></table></div></div>';
-  el.innerHTML=html;
+
+  const filterChips = ['<span class="fc'+(S.envoisFilter==='all'?' on':'')+'" onclick="setEnvFilter('all')">Tous</span>',
+    ...AGENTS.map(a=>`<span class="fc${S.envoisFilter===a.id?' on':''}" onclick="setEnvFilter('${a.id}')">${a.name}</span>`)
+  ].join('');
+
+  const rows = data.length ? data.map(e=>{
+    const agentBadges = e.agents.map(id=>{ const a=byId(id); return `<span class="ap" style="background:${a?a.color:'#888'}">${a?a.name:id}</span>`; }).join('');
+    return `<tr>
+      <td>${fd(e.date)}</td><td><strong>${e.modele}</strong></td><td>${e.couleur||'-'}</td>
+      <td><span class="badge ba">${e.pieces} pcs</span></td>
+      <td>${agentBadges}</td>
+      <td style="color:var(--ink3);max-width:120px;font-size:11px">${e.notes||'-'}</td>
+      <td class="no-print" style="white-space:nowrap">
+        <button class="btn xs" onclick="openEnvoiForm('${e.id}')">Editer</button>
+        <button class="btn xs d" onclick="delEnvoi('${e.id}')">Suppr</button>
+      </td></tr>`;
+  }).join('') : `<tr><td colspan="7" class="empty">Aucun envoi.</td></tr>`;
+
+  el.innerHTML=`
+  <div class="ph">
+    <div><div class="ptitle">Envois</div><div class="pdesc">Modeles envoyes aux agents</div></div>
+    <div style="display:flex;gap:8px" class="no-print">
+      <button class="btn pr sm" onclick="doPrint('envois')">Imprimer</button>
+      <button class="btn g sm" onclick="openEnvoiForm('')">+ Nouvel envoi</button>
+    </div>
+  </div>
+  <div id="envoi-form-zone"></div>
+  <div class="fbar">${filterChips}</div>
+  <div class="card">
+    <div class="chdr">
+      <input style="width:190px;font-size:12px" placeholder="Rechercher..." id="envoisSearchInp" value="${S.envoisSearch}" oninput="S.envoisSearch=this.value;renderEnvois()">
+      <span style="font-size:11px;color:var(--ink3)">${data.length} resultat(s)</span>
+    </div>
+    <div class="twrap"><table>
+      <thead><tr><th>Date</th><th>Modele</th><th>Couleur</th><th>Pieces</th><th>Agent(s)</th><th>Notes</th><th class="no-print"></th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table></div>
+  </div>`;
   if(S.envoiFormOpen) injectEnvoiForm(mods,cols);
 }
 
+window.setEnvFilter=function(v){ S.envoisFilter=v; renderEnvois(); };
 window.openEnvoiForm=function(editId){ S.envoiFormOpen=true; S.envoiEditId=editId||null; renderEnvois(); };
 
 function injectEnvoiForm(mods,cols){
   const z=qs('#envoi-form-zone'); if(!z) return;
   const e=S.envoiEditId?S.data.envois.find(x=>x.id===S.envoiEditId):null;
-  let html='<div class="card" style="margin-bottom:14px;padding:16px 18px">';
-  html+='<div style="font-family:'Playfair Display',serif;font-size:16px;font-weight:600;margin-bottom:14px">'+(e?"Modifier l'envoi":'Nouvel envoi')+'</div>';
-  html+='<div class="fg"><label class="fl">Agent(s) *</label><div style="display:flex;flex-wrap:wrap;gap:6px">';
-  AGENTS.forEach(a=>{ html+='<button type="button" class="fc'+(e&&e.agents.includes(a.id)?' on':'')+'" data-aid="'+a.id+'" onclick="this.classList.toggle('on')">'+a.name+'<br><small style="opacity:.6;font-size:10px">'+a.region+'</small></button>'; });
-  html+='</div></div>';
-  html+='<div class="fr2">';
-  html+='<div class="fg"><label class="fl">Modele *</label><input list="emod" id="ef_mod" value="'+(e?e.modele:'')+'" placeholder="ex: Goku"><datalist id="emod">';
-  mods.forEach(m=>{ html+='<option value="'+m+'">'; });
-  html+='</datalist></div>';
-  html+='<div class="fg"><label class="fl">Couleur verre *</label><input list="ecol" id="ef_col" value="'+(e?e.couleur||'':'')+'" placeholder="ex: Storm"><datalist id="ecol">';
-  cols.forEach(c=>{ html+='<option value="'+c+'">'; });
-  html+='</datalist></div></div>';
-  html+='<div class="fr2">';
-  html+='<div class="fg"><label class="fl">Nb pieces *</label><input type="number" id="ef_pcs" min="1" value="'+(e?e.pieces:'')+'" placeholder="3"></div>';
-  html+='<div class="fg"><label class="fl">Date *</label><input type="date" id="ef_dat" value="'+(e?e.date:today())+'"></div>';
-  html+='</div>';
-  html+='<div class="fg"><label class="fl">Notes</label><textarea id="ef_notes">'+(e?e.notes||'':'')+'</textarea></div>';
-  html+='<div style="display:flex;gap:8px;margin-top:4px">';
-  html+='<button class="btn g sm" onclick="saveEnvoi()">Enregistrer</button>';
-  html+='<button class="btn sm" onclick="S.envoiFormOpen=false;S.envoiEditId=null;renderEnvois()">Annuler</button>';
-  html+='</div></div>';
-  z.innerHTML=html;
+  const agentBtns = AGENTS.map(a=>`<button type="button" class="fc${e&&e.agents.includes(a.id)?' on':''}" data-aid="${a.id}" onclick="this.classList.toggle('on')">${a.name}<br><small style="opacity:.6;font-size:10px">${a.region}</small></button>`).join('');
+  const modOpts = mods.map(m=>`<option value="${m}">`).join('');
+  const colOpts = cols.map(c=>`<option value="${c}">`).join('');
+  z.innerHTML=`<div class="card" style="margin-bottom:14px;padding:16px 18px">
+    <div style="font-size:16px;font-weight:600;margin-bottom:14px">${e?'Modifier envoi':'Nouvel envoi'}</div>
+    <div class="fg"><label class="fl">Agent(s) *</label><div style="display:flex;flex-wrap:wrap;gap:6px">${agentBtns}</div></div>
+    <div class="fr2">
+      <div class="fg"><label class="fl">Modele *</label><input list="emod" id="ef_mod" value="${e?e.modele:''}" placeholder="ex: Goku"><datalist id="emod">${modOpts}</datalist></div>
+      <div class="fg"><label class="fl">Couleur verre *</label><input list="ecol" id="ef_col" value="${e?e.couleur||'':''}" placeholder="ex: Storm"><datalist id="ecol">${colOpts}</datalist></div>
+    </div>
+    <div class="fr2">
+      <div class="fg"><label class="fl">Nb pieces *</label><input type="number" id="ef_pcs" min="1" value="${e?e.pieces:''}" placeholder="3"></div>
+      <div class="fg"><label class="fl">Date *</label><input type="date" id="ef_dat" value="${e?e.date:today()}"></div>
+    </div>
+    <div class="fg"><label class="fl">Notes</label><textarea id="ef_notes">${e?e.notes||'':''}</textarea></div>
+    <div style="display:flex;gap:8px;margin-top:4px">
+      <button class="btn g sm" onclick="saveEnvoi()">Enregistrer</button>
+      <button class="btn sm" onclick="cancelEnvoiForm()">Annuler</button>
+    </div>
+  </div>`;
 }
 
+window.cancelEnvoiForm=function(){ S.envoiFormOpen=false; S.envoiEditId=null; renderEnvois(); };
 window.saveEnvoi=async function(){
   const agents=qsa('[data-aid].on').map(b=>b.dataset.aid);
   const modele=qs('#ef_mod')?.value.trim();
@@ -379,13 +403,13 @@ window.saveEnvoi=async function(){
   scheduleSave(); toast('Envoi enregistre');
   renderEnvois(); renderDashboard(); renderCollections();
 };
-
 window.delEnvoi=function(id){
   if(!confirm('Supprimer ?')) return;
   S.data.envois=S.data.envois.filter(e=>e.id!==id);
   scheduleSave(); toast('Supprime'); renderEnvois(); renderDashboard();
 };
 
+// ---- RETOURS ----
 function renderRetours(){
   const el=qs('#tab-retours'); if(!el) return;
   const aid=S.agentTab, agent=byId(aid);
@@ -395,74 +419,113 @@ function renderRetours(){
   if(rs) data=data.filter(r=>(r.modele+' '+(r.couleur||'')).toLowerCase().includes(rs));
   data.sort((a,b)=>(b.date_demande||'').localeCompare(a.date_demande||''));
   const mods=[...new Set(MASTER.map(p=>p.modele))].sort();
-  let html='<div class="ph"><div><div class="ptitle">Retours</div><div class="pdesc">Par agent</div></div>';
-  html+='<button class="btn pr sm no-print" onclick="doPrint('retours_'+aid+'')">Imprimer</button></div>';
-  html+='<div class="atabs">';
-  AGENTS.forEach(a=>{ html+='<button class="at'+(a.id===aid?' on':'')+'" onclick="setAgentTab(''+a.id+'','ret')" style="'+(a.id===aid?'border-bottom-color:'+a.color+';color:'+a.color:'')+'">' +a.name+'</button>'; });
-  html+='</div>';
+
+  const agentTabs = AGENTS.map(a=>`<button class="at${a.id===aid?' on':''}" onclick="setAgentTab('${a.id}','ret')" style="${a.id===aid?`border-bottom-color:${a.color};color:${a.color}`:''}">${a.name}</button>`).join('');
+
+  let editFormHtml='';
   if(S.retourEditData && S.retourEditData.aid===aid){
     const r=S.retourEditData;
-    html+='<div class="ret-inline" style="border-left-color:'+agent.color+'">';
-    html+='<div style="font-size:12px;font-weight:600;margin-bottom:10px;color:'+agent.color+'">Modifier le retour</div>';
-    html+='<div class="fr2"><div class="fg"><label class="fl">Modele</label><input list="re_ml" id="re_mod" value="'+(r.modele||'')+'"><datalist id="re_ml">';
-    mods.forEach(m=>{ html+='<option value="'+m+'">'; });
-    html+='</datalist></div><div class="fg"><label class="fl">Couleur</label><input id="re_col" value="'+(r.couleur||'')+'"></div></div>';
-    html+='<div class="fr2"><div class="fg"><label class="fl">Date</label><input type="date" id="re_dat" value="'+(r.date_demande||today())+'"></div>';
-    html+='<div class="fg"><label class="fl">Statut</label><select id="re_stat">';
-    html+='<option value="attente"'+(( r.statut||'attente')==='attente'?' selected':'')+'>En attente</option>';
-    html+='<option value="recu"'+(r.statut==='recu'?' selected':'')+'>Recu</option>';
-    html+='<option value="non_recu"'+(r.statut==='non_recu'?' selected':'')+'>Non recu</option>';
-    html+='</select></div></div>';
-    html+='<div class="fr2"><div class="fg"><label class="fl">Date reception</label><input type="date" id="re_recep" value="'+(r.date_reception||'')+'"></div>';
-    html+='<div class="fg"><label class="fl">Notes</label><input id="re_notes" value="'+(r.notes||'')+'"></div></div>';
-    html+='<div style="display:flex;gap:8px;margin-top:4px">';
-    html+='<button class="btn g sm" onclick="saveRetourEdit(''+aid+'')">Enregistrer</button>';
-    html+='<button class="btn sm" onclick="S.retourEditData=null;renderRetours()">Annuler</button></div></div>';
+    const modOpts=mods.map(m=>`<option value="${m}">`).join('');
+    editFormHtml=`<div class="ret-inline" style="border-left-color:${agent.color}">
+      <div style="font-size:12px;font-weight:600;margin-bottom:10px;color:${agent.color}">Modifier le retour</div>
+      <div class="fr2">
+        <div class="fg"><label class="fl">Modele</label><input list="re_ml" id="re_mod" value="${r.modele||''}"><datalist id="re_ml">${modOpts}</datalist></div>
+        <div class="fg"><label class="fl">Couleur</label><input id="re_col" value="${r.couleur||''}"></div>
+      </div>
+      <div class="fr2">
+        <div class="fg"><label class="fl">Date</label><input type="date" id="re_dat" value="${r.date_demande||today()}"></div>
+        <div class="fg"><label class="fl">Statut</label><select id="re_stat">
+          <option value="attente"${(r.statut||'attente')==='attente'?' selected':''}>En attente</option>
+          <option value="recu"${r.statut==='recu'?' selected':''}>Recu</option>
+          <option value="non_recu"${r.statut==='non_recu'?' selected':''}>Non recu</option>
+        </select></div>
+      </div>
+      <div class="fr2">
+        <div class="fg"><label class="fl">Date reception</label><input type="date" id="re_recep" value="${r.date_reception||''}"></div>
+        <div class="fg"><label class="fl">Notes</label><input id="re_notes" value="${r.notes||''}"></div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:4px">
+        <button class="btn g sm" onclick="saveRetourEdit('${aid}')">Enregistrer</button>
+        <button class="btn sm" onclick="cancelRetourEdit()">Annuler</button>
+      </div>
+    </div>`;
   }
+
+  let newFormHtml='';
   if(S.retourNewOpen && S.retourNewAid===aid){
-    html+='<div class="ret-inline" style="border-left-color:'+agent.color+'">';
-    html+='<div style="font-size:12px;font-weight:600;margin-bottom:10px;color:'+agent.color+'">Nouvelle demande - '+agent.name+'</div>';
-    html+='<div class="fr2"><div class="fg"><label class="fl">Modele *</label><input list="rn_ml" id="rn_mod" placeholder="ex: Goku"><datalist id="rn_ml">';
-    mods.forEach(m=>{ html+='<option value="'+m+'">'; });
-    html+='</datalist></div><div class="fg"><label class="fl">Couleur</label><input id="rn_col" placeholder="ex: Storm"></div></div>';
-    html+='<div class="fr2"><div class="fg"><label class="fl">Date</label><input type="date" id="rn_dat" value="'+today()+'"></div>';
-    html+='<div class="fg"><label class="fl">Statut</label><select id="rn_stat"><option value="attente">En attente</option><option value="recu">Recu</option><option value="non_recu">Non recu</option></select></div></div>';
-    html+='<div class="fg"><label class="fl">Notes</label><textarea id="rn_notes"></textarea></div>';
-    html+='<div style="display:flex;gap:8px;margin-top:4px">';
-    html+='<button class="btn g sm" onclick="saveNewRetour(''+aid+'')">Enregistrer</button>';
-    html+='<button class="btn sm" onclick="S.retourNewOpen=false;renderRetours()">Annuler</button></div></div>';
+    const modOpts=mods.map(m=>`<option value="${m}">`).join('');
+    newFormHtml=`<div class="ret-inline" style="border-left-color:${agent.color}">
+      <div style="font-size:12px;font-weight:600;margin-bottom:10px;color:${agent.color}">Nouvelle demande - ${agent.name}</div>
+      <div class="fr2">
+        <div class="fg"><label class="fl">Modele *</label><input list="rn_ml" id="rn_mod" placeholder="ex: Goku"><datalist id="rn_ml">${modOpts}</datalist></div>
+        <div class="fg"><label class="fl">Couleur</label><input id="rn_col" placeholder="ex: Storm"></div>
+      </div>
+      <div class="fr2">
+        <div class="fg"><label class="fl">Date</label><input type="date" id="rn_dat" value="${today()}"></div>
+        <div class="fg"><label class="fl">Statut</label><select id="rn_stat">
+          <option value="attente">En attente</option>
+          <option value="recu">Recu</option>
+          <option value="non_recu">Non recu</option>
+        </select></div>
+      </div>
+      <div class="fg"><label class="fl">Notes</label><textarea id="rn_notes"></textarea></div>
+      <div style="display:flex;gap:8px;margin-top:4px">
+        <button class="btn g sm" onclick="saveNewRetour('${aid}')">Enregistrer</button>
+        <button class="btn sm" onclick="cancelNewRetour()">Annuler</button>
+      </div>
+    </div>`;
   }
-  html+='<div class="fbar">';
-  html+='<span class="fc'+(S.retourFilter==='all'?' on':'')+'" onclick="S.retourFilter='all';renderRetours()">Tous</span>';
-  html+='<span class="fc'+(S.retourFilter==='attente'?' on':'')+'" onclick="S.retourFilter='attente';renderRetours()">En attente</span>';
-  html+='<span class="fc'+(S.retourFilter==='recu'?' on':'')+'" onclick="S.retourFilter='recu';renderRetours()">Recu</span>';
-  html+='<span class="fc'+(S.retourFilter==='non_recu'?' on':'')+'" onclick="S.retourFilter='non_recu';renderRetours()">Non recu</span></div>';
-  html+='<div class="card"><div class="chdr">';
-  html+='<input style="width:190px;font-size:12px" placeholder="Rechercher..." value="'+(S.retourSearch[aid]||'')+'" oninput="S.retourSearch[''+aid+'']=this.value;renderRetours()">';
-  html+='<div style="display:flex;gap:8px;align-items:center"><span style="font-size:11px;color:var(--ink3)">'+data.length+' resultat(s)</span>';
-  html+='<button class="btn g sm no-print" onclick="S.retourNewOpen=true;S.retourNewAid=''+aid+'';S.retourEditData=null;renderRetours()">+ Nouvelle demande</button></div></div>';
-  html+='<div class="twrap"><table><thead><tr><th>Date</th><th>Modele</th><th>Couleur</th><th>Statut</th><th>Reception</th><th>Notes</th><th class="no-print"></th></tr></thead><tbody>';
-  if(data.length){
-    data.forEach(r=>{
-      const sb=r.statut==='attente'?'<span class="badge bb">En attente</span>':r.statut==='recu'?'<span class="badge bg">Recu</span>':'<span class="badge br">Non recu</span>';
-      html+='<tr><td>'+fd(r.date_demande)+'</td><td><strong>'+r.modele+'</strong></td><td>'+(r.couleur||'-')+'</td>';
-      html+='<td>'+sb+'</td><td>'+(r.date_reception?fd(r.date_reception):'-')+'</td>';
-      html+='<td style="color:var(--ink3);max-width:120px;font-size:11px">'+(r.notes||'-')+'</td>';
-      html+='<td class="no-print" style="white-space:nowrap">';
-      html+='<button class="btn xs s" onclick="markRecu(''+aid+'',''+r.id+'')">Recu</button> ';
-      html+='<button class="btn xs" onclick="editRetour(''+aid+'',''+r.id+'')">Editer</button> ';
-      html+='<button class="btn xs d" onclick="delRetour(''+aid+'',''+r.id+'')">Suppr</button></td></tr>';
-    });
-  } else { html+='<tr><td colspan="7" class="empty">Aucune demande.</td></tr>'; }
-  html+='</tbody></table></div></div>';
-  el.innerHTML=html;
+
+  const rows = data.length ? data.map(r=>{
+    const sb=r.statut==='attente'?'<span class="badge bb">En attente</span>':r.statut==='recu'?'<span class="badge bg">Recu</span>':'<span class="badge br">Non recu</span>';
+    return `<tr>
+      <td>${fd(r.date_demande)}</td><td><strong>${r.modele}</strong></td><td>${r.couleur||'-'}</td>
+      <td>${sb}</td><td>${r.date_reception?fd(r.date_reception):'-'}</td>
+      <td style="color:var(--ink3);max-width:120px;font-size:11px">${r.notes||'-'}</td>
+      <td class="no-print" style="white-space:nowrap">
+        <button class="btn xs s" onclick="markRecu('${aid}','${r.id}')">Recu</button>
+        <button class="btn xs" onclick="editRetour('${aid}','${r.id}')">Editer</button>
+        <button class="btn xs d" onclick="delRetour('${aid}','${r.id}')">Suppr</button>
+      </td></tr>`;
+  }).join('') : `<tr><td colspan="7" class="empty">Aucune demande.</td></tr>`;
+
+  el.innerHTML=`
+  <div class="ph">
+    <div><div class="ptitle">Retours</div><div class="pdesc">Par agent</div></div>
+    <button class="btn pr sm no-print" onclick="doPrint('retours_${aid}')">Imprimer</button>
+  </div>
+  <div class="atabs">${agentTabs}</div>
+  ${editFormHtml}${newFormHtml}
+  <div class="fbar">
+    <span class="fc${S.retourFilter==='all'?' on':''}" onclick="setRetFilter('all')">Tous</span>
+    <span class="fc${S.retourFilter==='attente'?' on':''}" onclick="setRetFilter('attente')">En attente</span>
+    <span class="fc${S.retourFilter==='recu'?' on':''}" onclick="setRetFilter('recu')">Recu</span>
+    <span class="fc${S.retourFilter==='non_recu'?' on':''}" onclick="setRetFilter('non_recu')">Non recu</span>
+  </div>
+  <div class="card">
+    <div class="chdr">
+      <input style="width:190px;font-size:12px" placeholder="Rechercher..." value="${S.retourSearch[aid]||''}" oninput="S.retourSearch['${aid}']=this.value;renderRetours()">
+      <div style="display:flex;gap:8px;align-items:center">
+        <span style="font-size:11px;color:var(--ink3)">${data.length} resultat(s)</span>
+        <button class="btn g sm no-print" onclick="openNewRetour('${aid}')">+ Nouvelle demande</button>
+      </div>
+    </div>
+    <div class="twrap"><table>
+      <thead><tr><th>Date</th><th>Modele</th><th>Couleur</th><th>Statut</th><th>Reception</th><th>Notes</th><th class="no-print"></th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table></div>
+  </div>`;
 }
 
+window.setRetFilter=function(v){ S.retourFilter=v; renderRetours(); };
 window.setAgentTab=function(id,type){
   S.agentTab=id;
   if(type==='ret'){ S.retourEditData=null; S.retourNewOpen=false; renderRetours(); }
   else { S.retourForms={}; renderCollections(); }
 };
+window.openNewRetour=function(aid){ S.retourNewOpen=true; S.retourNewAid=aid; S.retourEditData=null; renderRetours(); };
+window.cancelNewRetour=function(){ S.retourNewOpen=false; renderRetours(); };
+window.cancelRetourEdit=function(){ S.retourEditData=null; renderRetours(); };
 
 window.saveNewRetour=function(aid){
   const modele=qs('#rn_mod')?.value.trim();
@@ -484,7 +547,6 @@ window.editRetour=function(aid,rid){
   if(!r) return;
   S.retourEditData={...r,aid}; S.retourNewOpen=false; renderRetours();
 };
-
 window.saveRetourEdit=function(aid){
   const r=S.retourEditData;
   const idx=(S.data.retours[aid]||[]).findIndex(x=>x.id===r.id);
@@ -498,11 +560,10 @@ window.saveRetourEdit=function(aid){
     date_reception:qs('#re_recep')?.value||'',
     notes:qs('#re_notes')?.value.trim()||''
   };
-  if(newStatut==='recu' && r.statut!=='recu'){ removeFromColl(aid,updated.modele,updated.couleur); toast('Recu - retire de la collection'); }
+  if(newStatut==='recu'&&r.statut!=='recu'){ removeFromColl(aid,updated.modele,updated.couleur); toast('Recu - retire de la collection'); }
   S.data.retours[aid][idx]=updated; S.retourEditData=null;
   scheduleSave(); renderRetours(); renderDashboard(); renderCollections();
 };
-
 window.markRecu=function(aid,rid){
   const r=(S.data.retours[aid]||[]).find(x=>x.id===rid); if(!r) return;
   r.statut='recu'; r.date_reception=r.date_reception||today();
@@ -510,18 +571,17 @@ window.markRecu=function(aid,rid){
   scheduleSave(); toast(r.modele+' recu - retire de la collection');
   renderRetours(); renderDashboard(); renderCollections();
 };
-
 window.delRetour=function(aid,rid){
   if(!confirm('Supprimer ?')) return;
   S.data.retours[aid]=(S.data.retours[aid]||[]).filter(r=>r.id!==rid);
   scheduleSave(); toast('Supprime'); renderRetours(); renderDashboard();
 };
-
 function removeFromColl(aid,modele,couleur){
   const nm=modele.toLowerCase()+'_'+(couleur||'').toLowerCase();
   S.data.collections[aid]=(S.data.collections[aid]||[]).filter(p=>(p.modele.toLowerCase()+'_'+(p.couleur||'').toLowerCase())!==nm);
 }
 
+// ---- COLLECTIONS ----
 function renderCollections(){
   const el=qs('#tab-collections'); if(!el) return;
   const aid=S.agentTab, agent=byId(aid);
@@ -531,48 +591,70 @@ function renderCollections(){
   let filtered=coll.filter(p=>(!srch||(p.modele+' '+p.couleur).toLowerCase().includes(srch))&&(!cat||p.categorie===cat));
   filtered.sort((a,b)=>a.modele.localeCompare(b.modele)||(a.couleur||'').localeCompare(b.couleur||''));
   const rf=S.retourForms[aid]||{};
-  let html='<div class="ph"><div><div class="ptitle">Collections</div><div class="pdesc">'+agent.name+' - '+filtered.length+' / '+coll.length+' modeles</div></div>';
-  html+='<button class="btn pr sm no-print" onclick="doPrint('coll_'+aid+'')">Imprimer</button></div>';
-  html+='<div class="atabs">';
-  AGENTS.forEach(a=>{ html+='<button class="at'+(a.id===aid?' on':'')+'" onclick="setAgentTab(''+a.id+'','coll')" style="'+(a.id===aid?'border-bottom-color:'+a.color+';color:'+a.color:'')+'">' +a.name+' <span style="font-size:11px;opacity:.6">('+( S.data.collections[a.id]||[]).length+')</span></button>'; });
-  html+='</div>';
+
+  const agentTabs = AGENTS.map(a=>`<button class="at${a.id===aid?' on':''}" onclick="setAgentTab('${a.id}','coll')" style="${a.id===aid?`border-bottom-color:${a.color};color:${a.color}`:''}">${a.name} <span style="font-size:11px;opacity:.6">(${(S.data.collections[a.id]||[]).length})</span></button>`).join('');
+
+  let retourFormHtml='';
   if(rf.open){
-    html+='<div class="ret-inline" style="border-left-color:'+agent.color+'">';
-    html+='<div style="font-size:12px;font-weight:600;margin-bottom:10px;color:'+agent.color+'">Retour - '+rf.modele+(rf.couleur?' - '+rf.couleur:'')+'</div>';
-    html+='<div class="fr2"><div class="fg"><label class="fl">Date demande</label><input type="date" id="rf_dat" value="'+today()+'"></div>';
-    html+='<div class="fg"><label class="fl">Statut</label><select id="rf_stat"><option value="attente">En attente</option><option value="recu">Recu</option><option value="non_recu">Non recu</option></select></div></div>';
-    html+='<div class="fr2"><div class="fg"><label class="fl">Date reception</label><input type="date" id="rf_recep"></div>';
-    html+='<div class="fg"><label class="fl">Notes</label><input id="rf_notes" placeholder="Facultatif"></div></div>';
-    html+='<div style="display:flex;gap:8px;margin-top:4px">';
-    html+='<button class="btn g sm" onclick="submitCollRetour(''+aid+'')">Enregistrer</button>';
-    html+='<button class="btn sm" onclick="S.retourForms[''+aid+'']=null;renderCollections()">Annuler</button></div></div>';
+    retourFormHtml=`<div class="ret-inline" style="border-left-color:${agent.color}">
+      <div style="font-size:12px;font-weight:600;margin-bottom:10px;color:${agent.color}">Retour - ${rf.modele}${rf.couleur?' - '+rf.couleur:''}</div>
+      <div class="fr2">
+        <div class="fg"><label class="fl">Date demande</label><input type="date" id="rf_dat" value="${today()}"></div>
+        <div class="fg"><label class="fl">Statut</label><select id="rf_stat">
+          <option value="attente">En attente</option>
+          <option value="recu">Recu</option>
+          <option value="non_recu">Non recu</option>
+        </select></div>
+      </div>
+      <div class="fr2">
+        <div class="fg"><label class="fl">Date reception</label><input type="date" id="rf_recep"></div>
+        <div class="fg"><label class="fl">Notes</label><input id="rf_notes" placeholder="Facultatif"></div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:4px">
+        <button class="btn g sm" onclick="submitCollRetour('${aid}')">Enregistrer</button>
+        <button class="btn sm" onclick="cancelCollRetour('${aid}')">Annuler</button>
+      </div>
+    </div>`;
   }
-  html+='<div class="card"><div class="chdr" style="flex-wrap:wrap;gap:8px">';
-  html+='<input style="width:180px;font-size:12px" placeholder="Rechercher..." value="'+(S.collSearch[aid]||'')+'" oninput="S.collSearch[''+aid+'']=this.value;renderCollections()">';
-  html+='<select style="width:148px;font-size:12px" onchange="S.collCat[''+aid+'']=this.value;renderCollections()">';
-  html+='<option value="">Toutes categories</option>';
-  ['ICONIC','LAST CHANCE','ORIGIN','STUDIO','COLLAB','GOODIES'].forEach(c=>{ html+='<option value="'+c+'"'+(cat===c?' selected':'')+'>'+c+'</option>'; });
-  html+='</select><span style="font-size:11px;color:var(--ink3)">'+filtered.length+' / '+coll.length+'</span></div>';
-  html+='<div class="twrap"><table><thead><tr><th>Modele</th><th>Couleur</th><th>Categorie</th><th>Ajoute le</th><th class="no-print" style="width:130px"></th></tr></thead><tbody>';
-  if(filtered.length){
-    filtered.forEach(p=>{
-      html+='<tr><td><strong>'+p.modele+'</strong></td><td>'+(p.couleur||'-')+'</td>';
-      html+='<td>'+catPill(p.categorie)+'</td>';
-      html+='<td style="color:var(--ink3);font-size:11px">'+fd(p.addedAt)+'</td>';
-      html+='<td class="no-print" style="white-space:nowrap">';
-      html+='<button class="btn xs" style="color:var(--gold);border-color:var(--gold-l);background:var(--gold-f)" onclick="openCollRetour(''+aid+'',''+p.id+'')">Retour</button> ';
-      html+='<button class="btn xs d" onclick="removeProd(''+aid+'',''+p.id+'')">Suppr</button></td></tr>';
-    });
-  } else { html+='<tr><td colspan="5" class="empty">Aucun modele.</td></tr>'; }
-  html+='</tbody></table></div>';
-  html+='<div style="padding:10px 14px;border-top:1px solid var(--bdr);display:flex;gap:8px;align-items:center;flex-wrap:wrap" class="no-print">';
-  html+='<span style="font-size:12px;color:var(--ink2)">Ajouter :</span>';
-  html+='<input list="mastList" id="addProdInp" style="flex:1;min-width:160px;font-size:12px" placeholder="Nom du produit...">';
-  html+='<datalist id="mastList">';
-  MASTER.filter(p=>!(S.data.collections[aid]||[]).find(x=>x.id===p.id)).forEach(p=>{ html+='<option value="'+p.nom+'">'; });
-  html+='</datalist>';
-  html+='<button class="btn s sm" onclick="addProd(''+aid+'')">+ Ajouter</button></div></div>';
-  el.innerHTML=html;
+
+  const catOpts = ['ICONIC','LAST CHANCE','ORIGIN','STUDIO','COLLAB','GOODIES'].map(c=>`<option value="${c}"${cat===c?' selected':''}>${c}</option>`).join('');
+  const mastOpts = MASTER.filter(p=>!(S.data.collections[aid]||[]).find(x=>x.id===p.id)).map(p=>`<option value="${p.nom}">`).join('');
+
+  const rows = filtered.length ? filtered.map(p=>`<tr>
+    <td><strong>${p.modele}</strong></td><td>${p.couleur||'-'}</td>
+    <td>${catPill(p.categorie)}</td>
+    <td style="color:var(--ink3);font-size:11px">${fd(p.addedAt)}</td>
+    <td class="no-print" style="white-space:nowrap">
+      <button class="btn xs" style="color:var(--gold);border-color:var(--gold-l);background:var(--gold-f)" onclick="openCollRetour('${aid}','${p.id}')">Retour</button>
+      <button class="btn xs d" onclick="removeProd('${aid}','${p.id}')">Suppr</button>
+    </td></tr>`).join('') : `<tr><td colspan="5" class="empty">Aucun modele.</td></tr>`;
+
+  el.innerHTML=`
+  <div class="ph">
+    <div><div class="ptitle">Collections</div><div class="pdesc">${agent.name} - ${filtered.length} / ${coll.length} modeles</div></div>
+    <button class="btn pr sm no-print" onclick="doPrint('coll_${aid}')">Imprimer</button>
+  </div>
+  <div class="atabs">${agentTabs}</div>
+  ${retourFormHtml}
+  <div class="card">
+    <div class="chdr" style="flex-wrap:wrap;gap:8px">
+      <input style="width:180px;font-size:12px" placeholder="Rechercher..." value="${S.collSearch[aid]||''}" oninput="S.collSearch['${aid}']=this.value;renderCollections()">
+      <select style="width:148px;font-size:12px" onchange="S.collCat['${aid}']=this.value;renderCollections()">
+        <option value="">Toutes categories</option>${catOpts}
+      </select>
+      <span style="font-size:11px;color:var(--ink3)">${filtered.length} / ${coll.length}</span>
+    </div>
+    <div class="twrap"><table>
+      <thead><tr><th>Modele</th><th>Couleur</th><th>Categorie</th><th>Ajoute le</th><th class="no-print" style="width:130px"></th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table></div>
+    <div style="padding:10px 14px;border-top:1px solid var(--bdr);display:flex;gap:8px;align-items:center;flex-wrap:wrap" class="no-print">
+      <span style="font-size:12px;color:var(--ink2)">Ajouter :</span>
+      <input list="mastList" id="addProdInp" style="flex:1;min-width:160px;font-size:12px" placeholder="Nom du produit...">
+      <datalist id="mastList">${mastOpts}</datalist>
+      <button class="btn s sm" onclick="addProd('${aid}')">+ Ajouter</button>
+    </div>
+  </div>`;
 }
 
 window.openCollRetour=function(aid,prodId){
@@ -581,7 +663,7 @@ window.openCollRetour=function(aid,prodId){
   renderCollections();
   setTimeout(()=>qs('#rf_dat')?.focus(),50);
 };
-
+window.cancelCollRetour=function(aid){ S.retourForms[aid]=null; renderCollections(); };
 window.submitCollRetour=function(aid){
   const rf=S.retourForms[aid]; if(!rf) return;
   const date=qs('#rf_dat')?.value||today();
@@ -595,13 +677,11 @@ window.submitCollRetour=function(aid){
   scheduleSave(); toast('Retour enregistre'+(statut==='recu'?' (retire)':''));
   renderCollections(); renderRetours(); renderDashboard();
 };
-
 window.removeProd=function(aid,pid){
   if(!confirm('Retirer ce modele ?')) return;
   S.data.collections[aid]=(S.data.collections[aid]||[]).filter(p=>p.id!==pid);
   scheduleSave(); toast('Retire'); renderCollections(); renderDashboard();
 };
-
 window.addProd=function(aid){
   const inp=qs('#addProdInp'); if(!inp||!inp.value.trim()) return;
   const val=inp.value.trim();
@@ -612,61 +692,55 @@ window.addProd=function(aid){
   scheduleSave(); inp.value=''; toast(prod.nom+' ajoute'); renderCollections();
 };
 
+// ---- AGENTS ----
 function renderAgents(){
   const el=qs('#tab-agents'); if(!el) return;
-  let html='<div class="ph"><div><div class="ptitle">Agents</div></div></div>';
-  html+='<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px">';
-  AGENTS.forEach(a=>{
+  const cards = AGENTS.map(a=>{
     const nc=(S.data.collections[a.id]||[]).length;
     const np=(S.data.retours[a.id]||[]).filter(r=>r.statut==='attente').length;
     const nr=(S.data.retours[a.id]||[]).filter(r=>r.statut==='recu').length;
-    html+='<div class="card" style="border-top:4px solid '+a.color+'">';
-    html+='<div style="display:flex;align-items:center;gap:12px;padding:16px 16px 12px">';
-    html+='<div style="width:42px;height:42px;border-radius:50%;background:'+a.color+';display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-size:20px;font-weight:600;color:#fff;flex-shrink:0">'+a.name[0]+'</div>';
-    html+='<div><div style="font-weight:600;font-size:14px">'+a.name+'</div><div style="font-size:11px;color:var(--ink3)">'+a.region+'</div></div></div>';
-    html+='<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:0 14px 14px">';
-    html+='<div style="background:var(--gold-f);border-radius:8px;padding:10px;text-align:center"><div style="font-size:20px;font-weight:700;color:var(--gold)">'+nc+'</div><div style="font-size:10px;color:var(--ink3);text-transform:uppercase">Modeles</div></div>';
-    html+='<div style="background:var(--red-l);border-radius:8px;padding:10px;text-align:center"><div style="font-size:20px;font-weight:700;color:var(--red)">'+np+'</div><div style="font-size:10px;color:var(--ink3);text-transform:uppercase">Attente</div></div>';
-    html+='<div style="background:var(--green-l);border-radius:8px;padding:10px;text-align:center"><div style="font-size:20px;font-weight:700;color:var(--green)">'+nr+'</div><div style="font-size:10px;color:var(--ink3);text-transform:uppercase">Recus</div></div></div>';
-    html+='<div style="padding:0 14px 14px;display:flex;gap:8px">';
-    html+='<button class="btn sm" style="flex:1;justify-content:center" onclick="S.agentTab=''+a.id+'';goTab('collections',document.querySelectorAll('.ntab')[3])">Collection</button>';
-    html+='<button class="btn sm" style="flex:1;justify-content:center" onclick="S.agentTab=''+a.id+'';goTab('retours',document.querySelectorAll('.ntab')[2])">Retours</button>';
-    html+='</div></div>';
-  });
-  html+='</div>';
-  el.innerHTML=html;
+    return `<div class="card" style="border-top:4px solid ${a.color}">
+      <div style="display:flex;align-items:center;gap:12px;padding:16px 16px 12px">
+        <div style="width:42px;height:42px;border-radius:50%;background:${a.color};display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:600;color:#fff;flex-shrink:0">${a.name[0]}</div>
+        <div><div style="font-weight:600;font-size:14px">${a.name}</div><div style="font-size:11px;color:var(--ink3)">${a.region}</div></div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:0 14px 14px">
+        <div style="background:var(--gold-f);border-radius:8px;padding:10px;text-align:center"><div style="font-size:20px;font-weight:700;color:var(--gold)">${nc}</div><div style="font-size:10px;color:var(--ink3);text-transform:uppercase">Modeles</div></div>
+        <div style="background:var(--red-l);border-radius:8px;padding:10px;text-align:center"><div style="font-size:20px;font-weight:700;color:var(--red)">${np}</div><div style="font-size:10px;color:var(--ink3);text-transform:uppercase">Attente</div></div>
+        <div style="background:var(--green-l);border-radius:8px;padding:10px;text-align:center"><div style="font-size:20px;font-weight:700;color:var(--green)">${nr}</div><div style="font-size:10px;color:var(--ink3);text-transform:uppercase">Recus</div></div>
+      </div>
+      <div style="padding:0 14px 14px;display:flex;gap:8px">
+        <button class="btn sm" style="flex:1;justify-content:center" onclick="setAgentTab('${a.id}','coll');goTab('collections',document.querySelectorAll('.ntab')[3])">Collection</button>
+        <button class="btn sm" style="flex:1;justify-content:center" onclick="setAgentTab('${a.id}','ret');goTab('retours',document.querySelectorAll('.ntab')[2])">Retours</button>
+      </div>
+    </div>`;
+  }).join('');
+  el.innerHTML=`<div class="ph"><div><div class="ptitle">Agents</div></div></div><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px">${cards}</div>`;
 }
 
+// ---- PRINT ----
 window.doPrint=function(type){
   const now=new Date().toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'});
   const css='<style>body{font-family:Arial,sans-serif;font-size:12px}table{width:100%;border-collapse:collapse}th{background:#1a1a2e;color:#fff;padding:7px 9px;text-align:left;font-size:11px}td{padding:6px 9px;border-bottom:1px solid #eee}.hd{text-align:center;margin-bottom:14px;padding-bottom:12px;border-bottom:2px solid #c9a84c}.hd h2{font-size:20px;color:#1a1a2e}.hd p{font-size:11px;color:#666}@page{margin:1.5cm}</style>';
   let body='';
   if(type==='envois'){
     const rows=S.data.envois.slice().sort((a,b)=>(b.date||'').localeCompare(a.date||'')).slice(0,50);
-    body='<div class="hd"><h2>Envois</h2><p>'+now+' - Eyes Gang CRM</p></div><table><thead><tr><th>Date</th><th>Modele</th><th>Couleur</th><th>Pieces</th><th>Agent(s)</th><th>Notes</th></tr></thead><tbody>';
-    rows.forEach(e=>{ body+='<tr><td>'+fd(e.date)+'</td><td>'+e.modele+'</td><td>'+(e.couleur||'-')+'</td><td>'+e.pieces+' pcs</td><td>'+e.agents.map(id=>byId(id)?.name||id).join(', ')+'</td><td>'+(e.notes||'-')+'</td></tr>'; });
-    body+='</tbody></table>';
+    body=`<div class="hd"><h2>Envois</h2><p>${now} - Eyes Gang CRM</p></div><table><thead><tr><th>Date</th><th>Modele</th><th>Couleur</th><th>Pieces</th><th>Agent(s)</th><th>Notes</th></tr></thead><tbody>${rows.map(e=>`<tr><td>${fd(e.date)}</td><td>${e.modele}</td><td>${e.couleur||'-'}</td><td>${e.pieces} pcs</td><td>${e.agents.map(id=>byId(id)?.name||id).join(', ')}</td><td>${e.notes||'-'}</td></tr>`).join('')}</tbody></table>`;
   } else if(type==='retours'){
     const rows=AGENTS.flatMap(a=>(S.data.retours[a.id]||[]).map(r=>({...r,an:a.name}))).sort((a,b)=>(b.date_demande||'').localeCompare(a.date_demande||'')).slice(0,50);
-    body='<div class="hd"><h2>Retours</h2><p>'+now+' - Eyes Gang CRM</p></div><table><thead><tr><th>Date</th><th>Modele</th><th>Couleur</th><th>Agent</th><th>Statut</th><th>Reception</th></tr></thead><tbody>';
-    rows.forEach(r=>{ body+='<tr><td>'+fd(r.date_demande)+'</td><td>'+r.modele+'</td><td>'+(r.couleur||'-')+'</td><td>'+r.an+'</td><td>'+({attente:'En attente',recu:'Recu',non_recu:'Non recu'}[r.statut])+'</td><td>'+(r.date_reception?fd(r.date_reception):'-')+'</td></tr>'; });
-    body+='</tbody></table>';
+    body=`<div class="hd"><h2>Retours</h2><p>${now} - Eyes Gang CRM</p></div><table><thead><tr><th>Date</th><th>Modele</th><th>Couleur</th><th>Agent</th><th>Statut</th><th>Reception</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${fd(r.date_demande)}</td><td>${r.modele}</td><td>${r.couleur||'-'}</td><td>${r.an}</td><td>${{attente:'En attente',recu:'Recu',non_recu:'Non recu'}[r.statut]}</td><td>${r.date_reception?fd(r.date_reception):'-'}</td></tr>`).join('')}</tbody></table>`;
   } else if(type.startsWith('retours_')){
     const aid=type.replace('retours_',''), a=byId(aid);
     const rows=(S.data.retours[aid]||[]).slice().sort((a,b)=>(b.date_demande||'').localeCompare(a.date_demande||''));
-    body='<div class="hd"><h2>Retours - '+(a?a.name:'')+'</h2><p>'+now+' - Eyes Gang CRM</p></div><table><thead><tr><th>Date</th><th>Modele</th><th>Couleur</th><th>Statut</th><th>Reception</th><th>Notes</th></tr></thead><tbody>';
-    rows.forEach(r=>{ body+='<tr><td>'+fd(r.date_demande)+'</td><td>'+r.modele+'</td><td>'+(r.couleur||'-')+'</td><td>'+({attente:'En attente',recu:'Recu',non_recu:'Non recu'}[r.statut])+'</td><td>'+(r.date_reception?fd(r.date_reception):'-')+'</td><td>'+(r.notes||'-')+'</td></tr>'; });
-    body+='</tbody></table>';
+    body=`<div class="hd"><h2>Retours - ${a?a.name:''}</h2><p>${now} - Eyes Gang CRM</p></div><table><thead><tr><th>Date</th><th>Modele</th><th>Couleur</th><th>Statut</th><th>Reception</th><th>Notes</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${fd(r.date_demande)}</td><td>${r.modele}</td><td>${r.couleur||'-'}</td><td>${{attente:'En attente',recu:'Recu',non_recu:'Non recu'}[r.statut]}</td><td>${r.date_reception?fd(r.date_reception):'-'}</td><td>${r.notes||'-'}</td></tr>`).join('')}</tbody></table>`;
   } else if(type.startsWith('coll_')){
     const aid=type.replace('coll_',''), a=byId(aid);
     const rows=(S.data.collections[aid]||[]).slice().sort((x,y)=>x.modele.localeCompare(y.modele));
-    body='<div class="hd"><h2>Collection - '+(a?a.name:'')+'</h2><p>'+now+' - '+rows.length+' modeles</p></div><table><thead><tr><th>Modele</th><th>Couleur</th><th>Categorie</th><th>Ajoute le</th></tr></thead><tbody>';
-    rows.forEach(p=>{ body+='<tr><td>'+p.modele+'</td><td>'+(p.couleur||'-')+'</td><td>'+p.categorie+'</td><td>'+fd(p.addedAt)+'</td></tr>'; });
-    body+='</tbody></table>';
+    body=`<div class="hd"><h2>Collection - ${a?a.name:''}</h2><p>${now} - ${rows.length} modeles</p></div><table><thead><tr><th>Modele</th><th>Couleur</th><th>Categorie</th><th>Ajoute le</th></tr></thead><tbody>${rows.map(p=>`<tr><td>${p.modele}</td><td>${p.couleur||'-'}</td><td>${p.categorie}</td><td>${fd(p.addedAt)}</td></tr>`).join('')}</tbody></table>`;
   }
   if(!body) return;
   const w=window.open('','_blank');
-  w.document.write('<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Eyes Gang CRM</title>'+css+'</head><body>'+body+'</body></html>');
+  w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Eyes Gang CRM</title>${css}</head><body>${body}</body></html>`);
   w.document.close(); setTimeout(()=>{ w.focus(); w.print(); },400);
 };
 
