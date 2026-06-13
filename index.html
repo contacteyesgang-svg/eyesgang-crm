@@ -93,6 +93,7 @@ tr:last-child td{border-bottom:none}tr:hover td{background:var(--gof)}
   <button class="nt" data-tab="retours">Retours</button>
   <button class="nt" data-tab="collections">Collections</button>
   <button class="nt" data-tab="agents">Agents</button>
+  <button class="nt" data-tab="facturation">Facturation</button>
 </nav>
 <main>
   <div id="tab-dashboard" class="tab on"><div style="text-align:center;padding:60px;color:var(--ink3)">Connexion a Firebase...</div></div>
@@ -100,6 +101,7 @@ tr:last-child td{border-bottom:none}tr:hover td{background:var(--gof)}
   <div id="tab-retours" class="tab"></div>
   <div id="tab-collections" class="tab"></div>
   <div id="tab-agents" class="tab"></div>
+  <div id="tab-facturation" class="tab"></div>
 </main>
 <div class="toast" id="toast"></div>
 
@@ -148,7 +150,8 @@ window.APP = {
   ef:'all', es:'', rf:'all', rs:{}, cs:{}, cc:{},
   forms:{}, eid:null, eopen:false,
   red:null, rnew:false, rnaid:null,
-  data:{envois:[],retours:{},collections:{}},
+  data:{envois:[],retours:{},collections:{},facturation:[]},
+  factuYear:new Date().getFullYear(),
   ready:false,
   render(){ renders[this.tab]?.(); }
 };
@@ -177,6 +180,7 @@ try{
     if(snap.exists()){
       const r=snap.val();
       if(r.envois) APP.data.envois=r.envois;
+      if(r.facturation) APP.data.facturation=r.facturation;
       AGENTS.forEach(a=>{
         if(r.retours?.[a.id]) APP.data.retours[a.id]=r.retours[a.id];
         else if(!APP.data.retours[a.id]) APP.data.retours[a.id]=[];
@@ -223,8 +227,8 @@ upDate();setInterval(upDate,30000);
 
 // ===================== RENDER FUNCTIONS =====================
 
-function renderAll(){renderDash();renderEnvois();renderRetours();renderColl();renderAgents();}
-const renders={dashboard:renderDash,envois:renderEnvois,retours:renderRetours,collections:renderColl,agents:renderAgents};
+function renderAll(){renderDash();renderEnvois();renderRetours();renderColl();renderAgents();renderFactu();}
+const renders={dashboard:renderDash,envois:renderEnvois,retours:renderRetours,collections:renderColl,agents:renderAgents,facturation:renderFactu};
 
 // --- DASHBOARD ---
 function renderDash(){
@@ -686,6 +690,184 @@ function doPrint(type){
   if(!body)return;
   const w=window.open('','_blank');
   w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Eyes Gang CRM</title>${css}</head><body>${body}</body></html>`);
+  w.document.close();setTimeout(()=>{w.focus();w.print();},400);
+}
+
+// ===================== FACTURATION =====================
+function renderFactu(){
+  const el=qs('#tab-facturation'); if(!el) return;
+  const now=new Date();
+  const years=[...new Set(APP.data.facturation.map(f=>f.annee))].sort((a,b)=>b-a);
+  if(!years.includes(now.getFullYear())) years.unshift(now.getFullYear());
+  const selYear = APP.factuYear || now.getFullYear();
+  APP.factuYear = selYear;
+  const moisLabels=['Janvier','Fevrier','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Decembre'];
+  const agentsFactu=[
+    {id:'leslie', name:'Leslie',          color:'#c94c8e', type:'leslie'},
+    {id:'pa',     name:'Pierre Alexandre', color:'#3d9970', type:'standard'},
+    {id:'sami',   name:'Sami',             color:'#3a7bd5', type:'standard'},
+    {id:'velvet', name:'Velvet',           color:'#c97a4c', type:'standard'},
+  ];
+
+  // Get or create entry for a given agent/month/year
+  function getEntry(agentId, mois, annee){
+    return APP.data.facturation.find(f=>f.agent===agentId&&f.mois===mois&&f.annee===annee) || {agent:agentId,mois,annee,caht:0,fraisPort:0,autresFrais:0};
+  }
+
+  // Compute commission
+  function calcCommission(agentId, mois, annee){
+    const e=getEntry(agentId,mois,annee);
+    const caht=parseFloat(e.caht)||0;
+    const fp=parseFloat(e.fraisPort)||0;
+    const af=parseFloat(e.autresFrais)||0;
+    if(agentId==='leslie'){
+      const eSami=getEntry('sami',mois,annee);
+      const ePa=getEntry('pa',mois,annee);
+      const cahSami=parseFloat(eSami.caht)||0;
+      const cahPa=parseFloat(ePa.caht)||0;
+      const comm=(caht*0.20)+1000+(cahSami*0.02)+(cahPa*0.02)-fp-af;
+      return {comm, caht, fp, af, cahSami, cahPa};
+    } else {
+      const comm=(caht*0.20)-fp-af;
+      return {comm, caht, fp, af};
+    }
+  }
+
+  // Build month rows for one agent
+  function buildAgentTable(agentId, agentName, color){
+    const moisData=[];
+    let totalCA=0,totalComm=0;
+    for(let m=1;m<=12;m++){
+      const c=calcCommission(agentId,m,selYear);
+      totalCA+=c.caht;
+      totalComm+=c.comm;
+      moisData.push({m,label:moisLabels[m-1],...c});
+    }
+    const isLeslie=agentId==='leslie';
+    const extraHeader=isLeslie?'<th>CA HT Sami</th><th>CA HT PA</th><th>Fixe</th>':'';
+    const rows=moisData.map(d=>{
+      const extra=isLeslie?`<td>${d.cahSami.toFixed(2)} EUR</td><td>${d.cahPa.toFixed(2)} EUR</td><td>1 000,00 EUR</td>`:'';
+      const commColor=d.comm>=0?'var(--grn)':'var(--red)';
+      return `<tr data-agent="${agentId}" data-mois="${d.m}" data-annee="${selYear}">
+        <td style="font-weight:500">${d.label}</td>
+        <td><input class="fi-input" type="number" step="0.01" min="0" data-field="caht" data-agent="${agentId}" data-mois="${d.m}" data-annee="${selYear}" value="${d.caht||''}" placeholder="0.00"></td>
+        ${extra}
+        <td style="color:var(--ink3)">- <input class="fi-input" type="number" step="0.01" min="0" data-field="fraisPort" data-agent="${agentId}" data-mois="${d.m}" data-annee="${selYear}" value="${d.fp||''}" placeholder="0.00"></td>
+        <td style="color:var(--ink3)">- <input class="fi-input" type="number" step="0.01" min="0" data-field="autresFrais" data-agent="${agentId}" data-mois="${d.m}" data-annee="${selYear}" value="${d.af||''}" placeholder="0.00"></td>
+        <td style="font-weight:700;color:${commColor}">${d.comm.toLocaleString('fr-FR',{minimumFractionDigits:2,maximumFractionDigits:2})} EUR</td>
+      </tr>`;
+    }).join('');
+    const extraTotal=isLeslie?'<td colspan="3"></td>':'';
+    return `<div class="card" style="margin-bottom:20px;border-top:4px solid ${color}">
+      <div class="chdr" style="justify-content:space-between">
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="width:32px;height:32px;border-radius:50%;background:${color};display:flex;align-items:center;justify-content:center;font-weight:700;color:#fff">${agentName[0]}</div>
+          <div>
+            <div style="font-weight:600;font-size:14px">${agentName}</div>
+            <div style="font-size:11px;color:var(--ink3)">${isLeslie?'20% CA HT + 1000 EUR fixe + 2% CA Sami & PA':'20% CA HT'}</div>
+          </div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:11px;color:var(--ink3)">CA HT total ${selYear}</div>
+          <div style="font-size:18px;font-weight:700;color:${color}">${totalCA.toLocaleString('fr-FR',{minimumFractionDigits:2,maximumFractionDigits:2})} EUR</div>
+          <div style="font-size:11px;color:var(--ink3)">Total commissions</div>
+          <div style="font-size:18px;font-weight:700;color:${totalComm>=0?'var(--grn)':'var(--red)'}">${totalComm.toLocaleString('fr-FR',{minimumFractionDigits:2,maximumFractionDigits:2})} EUR</div>
+        </div>
+      </div>
+      <div class="twrap"><table>
+        <thead><tr><th>Mois</th><th>CA HT</th>${extraHeader}<th>Frais de port</th><th>Autres frais</th><th>Commission</th></tr></thead>
+        <tbody>${rows}</tbody>
+        <tfoot><tr style="background:var(--bg);font-weight:700">
+          <td>TOTAL ${selYear}</td>
+          <td>${totalCA.toLocaleString('fr-FR',{minimumFractionDigits:2,maximumFractionDigits:2})} EUR</td>
+          ${extraTotal}
+          <td colspan="2"></td>
+          <td style="color:${totalComm>=0?'var(--grn)':'var(--red)'}">${totalComm.toLocaleString('fr-FR',{minimumFractionDigits:2,maximumFractionDigits:2})} EUR</td>
+        </tr></tfoot>
+      </table></div>
+    </div>`;
+  }
+
+  const yearOpts=years.map(y=>`<option value="${y}"${y===selYear?' selected':''}>${y}</option>`).join('');
+
+  el.innerHTML=`
+  <div class="ph">
+    <div><div class="pt">Facturation Agents</div><div class="pd">Simulateur de commissions</div></div>
+    <div style="display:flex;gap:8px;align-items:center" class="np">
+      <label style="font-size:12px;color:var(--ink2)">Annee :</label>
+      <select id="yearSel" style="width:100px;font-size:13px">${yearOpts}</select>
+      <button class="btn p sm" id="btnPrintFactu">Imprimer</button>
+    </div>
+  </div>
+  <div style="background:var(--bll);border:1px solid #c0d8f8;border-radius:var(--r);padding:12px 16px;margin-bottom:20px;font-size:12px;color:var(--blu)">
+    <strong>France</strong> — Leslie, Pierre Alexandre, Sami &nbsp;|&nbsp; <strong>Europe / International</strong> — Velvet
+    <br>Saisissez les CA HT directement dans le tableau. Les commissions se calculent automatiquement.
+  </div>
+  <div style="font-size:13px;font-weight:600;margin-bottom:12px;color:var(--ink2);text-transform:uppercase;letter-spacing:.06em">France</div>
+  ${buildAgentTable('leslie','Leslie','#c94c8e')}
+  ${buildAgentTable('pa','Pierre Alexandre','#3d9970')}
+  ${buildAgentTable('sami','Sami','#3a7bd5')}
+  <div style="font-size:13px;font-weight:600;margin:20px 0 12px;color:var(--ink2);text-transform:uppercase;letter-spacing:.06em">Europe / International</div>
+  ${buildAgentTable('velvet','Velvet','#c97a4c')}`;
+
+  // Year selector
+  qs('#yearSel')?.addEventListener('change',e=>{APP.factuYear=parseInt(e.target.value);renderFactu();});
+
+  // Print
+  qs('#btnPrintFactu')?.addEventListener('click',()=>printFactu(selYear));
+
+  // Inputs — save on blur
+  qsa('.fi-input').forEach(inp=>{
+    inp.addEventListener('change',()=>{
+      const {agent,mois,annee,field}=inp.dataset;
+      const m=parseInt(mois),y=parseInt(annee),val=parseFloat(inp.value)||0;
+      let entry=APP.data.facturation.find(f=>f.agent===agent&&f.mois===m&&f.annee===y);
+      if(!entry){entry={id:uid(),agent,mois:m,annee:y,caht:0,fraisPort:0,autresFrais:0};APP.data.facturation.push(entry);}
+      entry[field]=val;
+      save();
+      renderFactu();
+    });
+  });
+}
+
+function printFactu(year){
+  const moisLabels=['Janvier','Fevrier','Mars','Avril','Mai','Juin','Juillet','Aout','Septembre','Octobre','Novembre','Decembre'];
+  const agentsF=[
+    {id:'leslie',name:'Leslie',type:'leslie'},
+    {id:'pa',name:'Pierre Alexandre',type:'standard'},
+    {id:'sami',name:'Sami',type:'standard'},
+    {id:'velvet',name:'Velvet',type:'standard'},
+  ];
+  const css='<style>body{font-family:Arial,sans-serif;font-size:11px}h1{font-size:18px;color:#1a1a2e;margin-bottom:4px}h2{font-size:14px;color:#1a1a2e;margin:16px 0 8px}table{width:100%;border-collapse:collapse;margin-bottom:16px}th{background:#1a1a2e;color:#fff;padding:6px 8px;text-align:left;font-size:10px}td{padding:5px 8px;border-bottom:1px solid #eee}.tot{font-weight:700;background:#f5f5f5}.hd{margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid #c9a84c}@page{margin:1.5cm}</style>';
+  let body=`<div class="hd"><h1>Facturation - Commissions ${year}</h1><p style="font-size:11px;color:#666">Eyes Gang CRM - Imprime le ${new Date().toLocaleDateString('fr-FR')}</p></div>`;
+  agentsF.forEach(a=>{
+    const isLeslie=a.id==='leslie';
+    body+=`<h2>${a.name} - ${isLeslie?'20% CA HT + 1000 EUR + 2% CA Sami & PA':'20% CA HT'}</h2>`;
+    body+=`<table><thead><tr><th>Mois</th><th>CA HT</th>${isLeslie?'<th>CA Sami</th><th>CA PA</th><th>Fixe</th>':''}<th>Frais port</th><th>Autres frais</th><th>Commission</th></tr></thead><tbody>`;
+    let totCA=0,totComm=0;
+    for(let m=1;m<=12;m++){
+      const e=APP.data.facturation.find(f=>f.agent===a.id&&f.mois===m&&f.annee===year)||{caht:0,fraisPort:0,autresFrais:0};
+      const caht=parseFloat(e.caht)||0;
+      const fp=parseFloat(e.fraisPort)||0;
+      const af=parseFloat(e.autresFrais)||0;
+      let comm,extra='';
+      if(isLeslie){
+        const es=APP.data.facturation.find(f=>f.agent==='sami'&&f.mois===m&&f.annee===year)||{caht:0};
+        const ep=APP.data.facturation.find(f=>f.agent==='pa'&&f.mois===m&&f.annee===year)||{caht:0};
+        const cs=parseFloat(es.caht)||0,cp=parseFloat(ep.caht)||0;
+        comm=(caht*0.20)+1000+(cs*0.02)+(cp*0.02)-fp-af;
+        extra=`<td>${cs.toFixed(2)}</td><td>${cp.toFixed(2)}</td><td>1 000,00</td>`;
+      } else {
+        comm=(caht*0.20)-fp-af;
+      }
+      totCA+=caht;totComm+=comm;
+      body+=`<tr><td>${moisLabels[m-1]}</td><td>${caht.toFixed(2)}</td>${extra}<td>${fp.toFixed(2)}</td><td>${af.toFixed(2)}</td><td style="font-weight:600">${comm.toFixed(2)}</td></tr>`;
+    }
+    body+=`<tr class="tot"><td>TOTAL ${year}</td><td>${totCA.toFixed(2)}</td>${isLeslie?'<td colspan="3"></td>':''}<td colspan="2"></td><td>${totComm.toFixed(2)}</td></tr>`;
+    body+='</tbody></table>';
+  });
+  const w=window.open('','_blank');
+  w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Facturation ${year} - Eyes Gang</title>${css}</head><body>${body}</body></html>`);
   w.document.close();setTimeout(()=>{w.focus();w.print();},400);
 }
 
