@@ -7,52 +7,51 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@400;600&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-:root{--ink:#1a1a2e;--ink2:#4a4a6a;--ink3:#9898b8;--bg:#f7f6f2;--white:#fff;--gold:#c9a84c;--gold-l:#f0e4c0;--gold-f:#faf5e8;--red:#c94c4c;--red-l:#fce8e8;--green:#3d9970;--green-l:#e8f5ef;--blue:#3a7bd5;--blue-l:#e8f0fc;--bdr:#e5e3dc;--sh:0 2px 10px rgba(26,26,46,.07);--r:10px;--r2:14px}
+:root{--ink:#1a1a2e;--ink2:#4a4a6a;--ink3:#9898b8;--bg:#f7f6f2;--wh:#fff;--gold:#c9a84c;--gol:#f0e4c0;--gof:#faf5e8;--red:#c94c4c;--rel:#fce8e8;--grn:#3d9970;--grl:#e8f5ef;--blu:#3a7bd5;--bll:#e8f0fc;--bdr:#e5e3dc;--r:10px;--r2:14px}
 body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--ink);font-size:13px;min-height:100vh}
 header{background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:56px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.2)}
-.hbrand{display:flex;align-items:center;gap:10px}
-.hlogo{width:34px;height:34px;background:var(--gold);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:600;font-size:15px;color:var(--ink)}
-.htitle{font-family:'Playfair Display',serif;font-size:18px;font-weight:600}
-.hsub{font-size:10px;color:var(--ink3);text-transform:uppercase;letter-spacing:.08em;margin-top:1px}
-.hright{display:flex;align-items:center;gap:14px}
-.hdate{font-size:11px;color:var(--ink3);text-align:right;line-height:1.6}
-.hdate strong{color:var(--gold);font-size:15px}
+.hb{display:flex;align-items:center;gap:10px}
+.hl{width:34px;height:34px;background:var(--gold);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display',serif;font-weight:600;font-size:15px;color:var(--ink)}
+.ht{font-family:'Playfair Display',serif;font-size:18px;font-weight:600}
+.hs{font-size:10px;color:var(--ink3);text-transform:uppercase;letter-spacing:.08em;margin-top:1px}
+.hr{display:flex;align-items:center;gap:14px}
+.hd{font-size:11px;color:var(--ink3);text-align:right;line-height:1.6}
+.hd strong{color:var(--gold);font-size:15px}
 .sw{display:flex;align-items:center;gap:7px;padding:5px 10px;border-radius:8px;background:rgba(255,255,255,.08)}
-.sdot{width:7px;height:7px;border-radius:50%;background:var(--green);flex-shrink:0;transition:background .3s}
-.sdot.s{background:var(--gold);animation:pu 1s infinite}.sdot.e{background:var(--red)}.sdot.w{background:#f5a623}
+.sd{width:7px;height:7px;border-radius:50%;background:var(--grn);flex-shrink:0;transition:background .3s}
+.sd.s{background:var(--gold);animation:pu 1s infinite}.sd.e{background:var(--red)}
 @keyframes pu{0%,100%{opacity:1}50%{opacity:.3}}
-.slbl{font-size:11px;color:rgba(255,255,255,.6)}
-nav{background:var(--white);border-bottom:1px solid var(--bdr);display:flex;overflow-x:auto;padding:0 16px}
-.ntab{padding:0 16px;height:44px;border:none;background:transparent;cursor:pointer;font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:var(--ink2);border-bottom:2.5px solid transparent;white-space:nowrap;transition:all .15s}
-.ntab:hover{color:var(--ink)}.ntab.on{color:var(--gold);border-bottom-color:var(--gold);font-weight:600}
+.sl{font-size:11px;color:rgba(255,255,255,.6)}
+nav{background:var(--wh);border-bottom:1px solid var(--bdr);display:flex;overflow-x:auto;padding:0 16px}
+.nt{padding:0 16px;height:44px;border:none;background:transparent;cursor:pointer;font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:var(--ink2);border-bottom:2.5px solid transparent;white-space:nowrap}
+.nt.on{color:var(--gold);border-bottom-color:var(--gold);font-weight:600}
 main{max-width:1180px;margin:0 auto;padding:24px 16px}
 .tab{display:none}.tab.on{display:block}
 .ph{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:18px;gap:12px;flex-wrap:wrap}
-.ptitle{font-family:'Playfair Display',serif;font-size:22px;font-weight:600}
-.pdesc{font-size:12px;color:var(--ink2);margin-top:3px}
-.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:var(--r);border:1px solid var(--bdr);background:var(--white);cursor:pointer;font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:var(--ink);white-space:nowrap;transition:all .12s}
-.btn:hover{background:var(--bg)}.btn.p{background:var(--ink);color:#fff;border-color:var(--ink)}.btn.p:hover{opacity:.85}
-.btn.g{background:var(--gold);color:var(--ink);border-color:var(--gold)}.btn.g:hover{background:#b8963d}
-.btn.d{color:var(--red);border-color:#f0c0c0;background:var(--red-l)}.btn.d:hover{background:#f8d0d0}
-.btn.s{color:var(--green);border-color:#b0ddc8;background:var(--green-l)}.btn.s:hover{background:#c8edd8}
-.btn.pr{color:var(--blue);border-color:#c0d8f8;background:var(--blue-l)}.btn.pr:hover{background:#d0e4fc}
+.pt{font-family:'Playfair Display',serif;font-size:22px;font-weight:600}
+.pd{font-size:12px;color:var(--ink2);margin-top:3px}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border-radius:var(--r);border:1px solid var(--bdr);background:var(--wh);cursor:pointer;font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:var(--ink);white-space:nowrap}
+.btn.g{background:var(--gold);color:var(--ink);border-color:var(--gold)}
+.btn.d{color:var(--red);border-color:#f0c0c0;background:var(--rel)}
+.btn.s{color:var(--grn);border-color:#b0ddc8;background:var(--grl)}
+.btn.p{color:var(--blu);border-color:#c0d8f8;background:var(--bll)}
 .btn.sm{padding:4px 9px;font-size:11px}.btn.xs{padding:3px 7px;font-size:11px;border-radius:7px}
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px;margin-bottom:18px}
-.sc{background:var(--white);border:1px solid var(--bdr);border-radius:var(--r2);padding:14px 16px;text-align:center;box-shadow:var(--sh)}
+.sc{background:var(--wh);border:1px solid var(--bdr);border-radius:var(--r2);padding:14px 16px;text-align:center}
 .sv{font-family:'Playfair Display',serif;font-size:24px;font-weight:600}
-.sl{font-size:10px;color:var(--ink3);text-transform:uppercase;letter-spacing:.08em;margin-top:2px}
-.card{background:var(--white);border:1px solid var(--bdr);border-radius:var(--r2);box-shadow:var(--sh)}
+.sl2{font-size:10px;color:var(--ink3);text-transform:uppercase;letter-spacing:.08em;margin-top:2px}
+.card{background:var(--wh);border:1px solid var(--bdr);border-radius:var(--r2)}
 .chdr{padding:11px 14px;border-bottom:1px solid var(--bdr);display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
-.chtitle{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--ink3)}
+.ct{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--ink3)}
 .dg{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
-input,select,textarea{width:100%;padding:8px 11px;border:1.5px solid var(--bdr);border-radius:var(--r);font-family:'Inter',sans-serif;font-size:12px;color:var(--ink);background:var(--white);outline:none;transition:border-color .15s}
-input:focus,select:focus,textarea:focus{border-color:var(--gold);box-shadow:0 0 0 3px var(--gold-f)}
+input,select,textarea{width:100%;padding:8px 11px;border:1.5px solid var(--bdr);border-radius:var(--r);font-family:'Inter',sans-serif;font-size:12px;color:var(--ink);background:var(--wh);outline:none}
+input:focus,select:focus,textarea:focus{border-color:var(--gold)}
 textarea{resize:vertical;min-height:58px}
 .fr2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.fg{margin-bottom:11px}
 .fl{display:block;font-size:11px;font-weight:600;color:var(--ink2);margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em}
 .badge{display:inline-flex;align-items:center;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600}
-.bg{background:var(--green-l);color:var(--green)}.br{background:var(--red-l);color:var(--red)}
-.bb{background:var(--blue-l);color:var(--blue)}.ba{background:var(--gold-l);color:#8a6a10}
+.bg{background:var(--grl);color:var(--grn)}.br{background:var(--rel);color:var(--red)}
+.bb{background:var(--bll);color:var(--blu)}.ba{background:var(--gol);color:#8a6a10}
 .ap{display:inline-block;padding:2px 7px;border-radius:9px;font-size:11px;font-weight:600;color:#fff;margin:1px}
 .cp{display:inline-block;padding:1px 6px;border-radius:6px;font-size:10px;font-weight:600}
 .cICONIC{background:#e8f0fc;color:#1a4a9a}.cORIGIN{background:#e8f5ef;color:#1a6a40}
@@ -60,40 +59,40 @@ textarea{resize:vertical;min-height:58px}
 .cCOLLAB{background:#fff0d8;color:#8a5a00}.cGOODIES{background:#f0f0f0;color:#555}
 .twrap{overflow-x:auto}
 table{width:100%;border-collapse:collapse}
-th{text-align:left;padding:8px 12px;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);background:var(--bg);border-bottom:1px solid var(--bdr)}
+th{text-align:left;padding:8px 12px;font-size:10px;font-weight:600;text-transform:uppercase;color:var(--ink3);background:var(--bg);border-bottom:1px solid var(--bdr)}
 td{padding:9px 12px;border-bottom:1px solid var(--bdr);font-size:12px;vertical-align:middle}
-tr:last-child td{border-bottom:none}tr:hover td{background:var(--gold-f)}
+tr:last-child td{border-bottom:none}tr:hover td{background:var(--gof)}
 .fbar{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
-.fc{padding:3px 10px;border-radius:12px;border:1px solid var(--bdr);background:var(--white);cursor:pointer;font-size:11px;font-weight:500;color:var(--ink2)}
-.fc:hover{border-color:var(--gold);color:var(--ink)}.fc.on{background:var(--ink);border-color:var(--ink);color:#fff}
+.fc{padding:3px 10px;border-radius:12px;border:1px solid var(--bdr);background:var(--wh);cursor:pointer;font-size:11px;color:var(--ink2)}
+.fc.on{background:var(--ink);border-color:var(--ink);color:#fff}
 .atabs{display:flex;overflow-x:auto;border-bottom:1px solid var(--bdr);margin-bottom:14px}
-.at{padding:8px 15px;border:none;background:transparent;cursor:pointer;font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:var(--ink2);border-bottom:3px solid transparent;white-space:nowrap;transition:all .15s}
-.at:hover{color:var(--ink)}.at.on{font-weight:600}
-.ret-inline{background:var(--bg);border:1px solid var(--bdr);border-radius:var(--r2);padding:14px 16px;margin-bottom:14px;border-left:4px solid var(--gold)}
+.at{padding:8px 15px;border:none;background:transparent;cursor:pointer;font-family:'Inter',sans-serif;font-size:12px;font-weight:500;color:var(--ink2);border-bottom:3px solid transparent;white-space:nowrap}
+.at.on{font-weight:600}
+.ri{background:var(--bg);border:1px solid var(--bdr);border-radius:var(--r2);padding:14px 16px;margin-bottom:14px;border-left:4px solid var(--gold)}
 .empty{text-align:center;padding:40px;color:var(--ink3)}
-.toast{position:fixed;bottom:20px;right:20px;background:var(--ink);color:#fff;padding:10px 16px;border-radius:var(--r2);font-size:12px;z-index:999;opacity:0;transition:opacity .2s;pointer-events:none;max-width:300px}
+.toast{position:fixed;bottom:20px;right:20px;background:var(--ink);color:#fff;padding:10px 16px;border-radius:var(--r2);font-size:12px;z-index:999;opacity:0;transition:opacity .2s;pointer-events:none}
 .toast.show{opacity:1}
-@media(max-width:680px){.dg{grid-template-columns:1fr}.fr2{grid-template-columns:1fr}main{padding:16px 10px}header{padding:0 12px}.hdate{display:none}}
-@media print{header,nav,.no-print{display:none!important}body{background:#fff}.tab{display:block!important}}
+@media(max-width:680px){.dg{grid-template-columns:1fr}.fr2{grid-template-columns:1fr}main{padding:16px 10px}header{padding:0 12px}.hd{display:none}}
+@media print{header,nav,.np{display:none!important}body{background:#fff}.tab{display:block!important}}
 </style>
 </head>
 <body>
 <header>
-  <div class="hbrand">
-    <div class="hlogo">EG</div>
-    <div><div class="htitle">CRM Collections</div><div class="hsub">Eyes Gang</div></div>
+  <div class="hb">
+    <div class="hl">EG</div>
+    <div><div class="ht">CRM Collections</div><div class="hs">Eyes Gang</div></div>
   </div>
-  <div class="hright">
-    <div class="sw"><div class="sdot" id="sdot"></div><div class="slbl" id="slbl">Connexion...</div></div>
-    <div class="hdate" id="hdate"></div>
+  <div class="hr">
+    <div class="sw"><div class="sd" id="sd"></div><div class="sl" id="sl">Connexion...</div></div>
+    <div class="hd" id="hd"></div>
   </div>
 </header>
 <nav>
-  <button class="ntab on" onclick="goTab('dashboard',this)">Tableau de bord</button>
-  <button class="ntab" onclick="goTab('envois',this)">Envois</button>
-  <button class="ntab" onclick="goTab('retours',this)">Retours</button>
-  <button class="ntab" onclick="goTab('collections',this)">Collections</button>
-  <button class="ntab" onclick="goTab('agents',this)">Agents</button>
+  <button class="nt on" data-tab="dashboard">Tableau de bord</button>
+  <button class="nt" data-tab="envois">Envois</button>
+  <button class="nt" data-tab="retours">Retours</button>
+  <button class="nt" data-tab="collections">Collections</button>
+  <button class="nt" data-tab="agents">Agents</button>
 </nav>
 <main>
   <div id="tab-dashboard" class="tab on"><div style="text-align:center;padding:60px;color:var(--ink3)">Connexion a Firebase...</div></div>
@@ -103,12 +102,27 @@ tr:last-child td{border-bottom:none}tr:hover td{background:var(--gold-f)}
   <div id="tab-agents" class="tab"></div>
 </main>
 <div class="toast" id="toast"></div>
-<script type="module">
 
+<script>
+// Nav tabs — no onclick needed, use event delegation
+document.querySelectorAll('.nt').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.nt').forEach(b => b.classList.remove('on'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('on'));
+    btn.classList.add('on');
+    const tab = document.getElementById('tab-' + btn.dataset.tab);
+    if(tab) tab.classList.add('on');
+    APP.tab = btn.dataset.tab;
+    APP.render();
+  });
+});
+</script>
+
+<script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
 import { getDatabase, ref, set, onValue } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js';
 
-const firebaseConfig = {
+const FBC = {
   apiKey: "AIzaSyC0vReG1muG4cmAJAW1H6VJ0Ai48vdWOCY",
   authDomain: "crmagents-9c3b5.firebaseapp.com",
   databaseURL: "https://crmagents-9c3b5-default-rtdb.europe-west1.firebasedatabase.app",
@@ -128,82 +142,65 @@ const AGENTS = [
   {id:'grece', name:'Agents Grece',     region:'Grece',         color:'#7a4cc9'}
 ];
 
-let S = {
-  tab:'dashboard', agentTab:'sami',
-  envoisFilter:'all', envoisSearch:'',
-  retourFilter:'all', retourSearch:{}, collSearch:{}, collCat:{},
-  retourForms:{}, envoiEditId:null, envoiFormOpen:false,
-  retourEditData:null, retourNewOpen:false, retourNewAid:null,
-  data:{ envois:[], retours:{}, collections:{} },
-  ready:false
+// Expose APP globally so inline handlers can call it
+window.APP = {
+  tab:'dashboard', aid:'sami',
+  ef:'all', es:'', rf:'all', rs:{}, cs:{}, cc:{},
+  forms:{}, eid:null, eopen:false,
+  red:null, rnew:false, rnaid:null,
+  data:{envois:[],retours:{},collections:{}},
+  ready:false,
+  render(){ renders[this.tab]?.(); }
 };
 
-let db, dataRef, saveTimer;
+let db, dref, stimer;
 
 function buildEmpty(){
   const d={envois:[],retours:{},collections:{}};
-  AGENTS.forEach(a=>{
-    d.retours[a.id]=[];
-    d.collections[a.id]=MASTER.map(p=>({...p,addedAt:'2025-01-01'}));
-  });
+  AGENTS.forEach(a=>{d.retours[a.id]=[];d.collections[a.id]=MASTER.map(p=>({...p,addedAt:'2025-01-01'}));});
   return d;
 }
 
-function setSyncUI(state, label){
-  const dot=document.getElementById('sdot'), lbl=document.getElementById('slbl');
-  if(!dot) return;
-  dot.className='sdot'+(state==='ok'?'':state==='s'?' s':state==='w'?' w':' e');
-  const labels={ok:'Synchronise',s:'Sauvegarde...',w:'Mode local',e:'Erreur sync'};
-  lbl.textContent = label || labels[state] || '';
+function sync(state,label){
+  const d=document.getElementById('sd'), l=document.getElementById('sl');
+  if(!d) return;
+  d.className='sd'+(state=='ok'?'':state=='s'?' s':' e');
+  l.textContent=label||{ok:'Synchronise',s:'Sauvegarde...',e:'Erreur sync'}[state]||'';
 }
 
-try {
-  const app = initializeApp(firebaseConfig);
-  db = getDatabase(app);
-  dataRef = ref(db, 'crm/data');
-  onValue(dataRef, (snapshot) => {
-    if(snapshot.exists()){
-      const remote = snapshot.val();
-      if(remote.envois) S.data.envois = remote.envois;
-      AGENTS.forEach(a => {
-        if(remote.retours && remote.retours[a.id]) S.data.retours[a.id] = remote.retours[a.id];
-        else if(!S.data.retours[a.id]) S.data.retours[a.id] = [];
-        if(remote.collections && remote.collections[a.id]) S.data.collections[a.id] = remote.collections[a.id];
-        else if(!S.data.collections[a.id]){
-          S.data.collections[a.id] = MASTER.map(p=>({...p,addedAt:'2025-01-01'}));
-          scheduleSave();
-        }
+// Firebase
+try{
+  const app=initializeApp(FBC);
+  db=getDatabase(app);
+  dref=ref(db,'crm/data');
+  onValue(dref,snap=>{
+    if(snap.exists()){
+      const r=snap.val();
+      if(r.envois) APP.data.envois=r.envois;
+      AGENTS.forEach(a=>{
+        if(r.retours?.[a.id]) APP.data.retours[a.id]=r.retours[a.id];
+        else if(!APP.data.retours[a.id]) APP.data.retours[a.id]=[];
+        if(r.collections?.[a.id]) APP.data.collections[a.id]=r.collections[a.id];
+        else if(!APP.data.collections[a.id]){APP.data.collections[a.id]=MASTER.map(p=>({...p,addedAt:'2025-01-01'}));save();}
       });
     } else {
-      S.data = buildEmpty();
-      set(dataRef, S.data);
+      APP.data=buildEmpty();
+      set(dref,APP.data);
     }
-    setSyncUI('ok');
-    if(!S.ready){ S.ready=true; renderAll(); }
-    else renderCurrent();
-  }, (error) => {
-    console.error('Firebase error:', error);
-    setSyncUI('e', 'Erreur: '+error.code);
-    S.data = buildEmpty();
-    S.ready = true;
-    renderAll();
-  });
-} catch(e) {
-  console.error('Init error:', e);
-  setSyncUI('e', 'Erreur init');
-  S.data = buildEmpty();
-  S.ready = true;
-  renderAll();
-}
+    sync('ok');
+    if(!APP.ready){APP.ready=true;renderAll();}
+    else APP.render();
+  },err=>{sync('e','Erreur: '+err.code);APP.data=buildEmpty();APP.ready=true;renderAll();});
+}catch(e){sync('e','Erreur init');APP.data=buildEmpty();APP.ready=true;renderAll();}
 
-function scheduleSave(){
-  clearTimeout(saveTimer);
-  saveTimer = setTimeout(async () => {
-    if(!dataRef) return;
-    setSyncUI('s');
-    try { await set(dataRef, S.data); setSyncUI('ok'); }
-    catch(e){ setSyncUI('e','Erreur sync'); }
-  }, 600);
+function save(){
+  clearTimeout(stimer);
+  stimer=setTimeout(async()=>{
+    if(!dref)return;
+    sync('s');
+    try{await set(dref,APP.data);sync('ok');}
+    catch(e){sync('e','Erreur sync');}
+  },600);
 }
 
 // Utils
@@ -213,536 +210,484 @@ const fd=d=>{if(!d)return'-';const p=d.split('-');return p.length===3?p[2]+'/'+p
 const byId=id=>AGENTS.find(a=>a.id===id);
 const qs=s=>document.querySelector(s);
 const qsa=s=>[...document.querySelectorAll(s)];
-function toast(msg){const t=qs('#toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2400);}
-function updateDate(){
-  const d=new Date(), el=qs('#hdate');
-  if(el) el.innerHTML=d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'})+'<br><strong>'+d.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})+'</strong>';
-}
-function catClass(c){ return c==='LAST CHANCE'?'LAST':c; }
-function catPill(c){ return `<span class="cp c${catClass(c)}">${c}</span>`; }
-updateDate(); setInterval(updateDate,30000);
+const toast=msg=>{const t=qs('#toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2400);};
+const catPill=c=>{const k=c==='LAST CHANCE'?'LAST':c;return `<span class="cp c${k}">${c}</span>`;};
+const agBadge=id=>{const a=byId(id);return a?`<span class="ap" style="background:${a.color}">${a.name}</span>`:''};
 
-// Tabs
-window.goTab=function(t,btn){
-  S.tab=t;
-  qsa('.ntab').forEach(b=>b.classList.remove('on'));
-  if(btn) btn.classList.add('on');
-  qsa('.tab').forEach(el=>el.classList.remove('on'));
-  const el=qs('#tab-'+t); if(el) el.classList.add('on');
-  renderCurrent();
-};
-function renderCurrent(){
-  const r={dashboard:renderDashboard,envois:renderEnvois,retours:renderRetours,collections:renderCollections,agents:renderAgents};
-  if(r[S.tab]) r[S.tab]();
+// date
+function upDate(){
+  const d=new Date(),el=qs('#hd');
+  if(el)el.innerHTML=d.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'})+'<br><strong>'+d.toLocaleTimeString('fr-FR',{hour:'2-digit',minute:'2-digit'})+'</strong>';
 }
-function renderAll(){renderDashboard();renderEnvois();renderRetours();renderCollections();renderAgents();}
+upDate();setInterval(upDate,30000);
 
-// ---- DASHBOARD ----
-function renderDashboard(){
-  const el=qs('#tab-dashboard'); if(!el) return;
-  const allR=AGENTS.flatMap(a=>S.data.retours[a.id]||[]);
+// ===================== RENDER FUNCTIONS =====================
+
+function renderAll(){renderDash();renderEnvois();renderRetours();renderColl();renderAgents();}
+const renders={dashboard:renderDash,envois:renderEnvois,retours:renderRetours,collections:renderColl,agents:renderAgents};
+
+// --- DASHBOARD ---
+function renderDash(){
+  const el=qs('#tab-dashboard');if(!el)return;
+  const allR=AGENTS.flatMap(a=>APP.data.retours[a.id]||[]);
   const pend=allR.filter(r=>r.statut==='attente').length;
-  const recu=allR.filter(r=>r.statut==='recu').length;
-  const totalC=AGENTS.reduce((s,a)=>s+(S.data.collections[a.id]||[]).length,0);
-
-  let agentsRows='';
-  AGENTS.forEach(a=>{
-    const nc=(S.data.collections[a.id]||[]).length;
-    const np=(S.data.retours[a.id]||[]).filter(r=>r.statut==='attente').length;
-    agentsRows+=`<div style="display:flex;align-items:center;justify-content:space-between;padding:9px 14px;border-bottom:1px solid var(--bdr)">
+  const recv=allR.filter(r=>r.statut==='recu').length;
+  const totC=AGENTS.reduce((s,a)=>s+(APP.data.collections[a.id]||[]).length,0);
+  const agRows=AGENTS.map(a=>{
+    const nc=(APP.data.collections[a.id]||[]).length;
+    const np=(APP.data.retours[a.id]||[]).filter(r=>r.statut==='attente').length;
+    return `<div style="display:flex;align-items:center;justify-content:space-between;padding:9px 14px;border-bottom:1px solid var(--bdr)">
       <div style="display:flex;align-items:center;gap:9px">
-        <div style="width:30px;height:30px;border-radius:50%;background:${a.color};display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:#fff">${a.name[0]}</div>
+        <div style="width:30px;height:30px;border-radius:50%;background:${a.color};display:flex;align-items:center;justify-content:center;font-weight:600;color:#fff">${a.name[0]}</div>
         <div><div style="font-weight:600;font-size:13px">${a.name}</div><div style="font-size:11px;color:var(--ink3)">${a.region}</div></div>
       </div>
-      <div style="font-size:11px;color:var(--ink2)">${nc} modeles - <span style="color:var(--red)">${np} en attente</span></div>
+      <div style="font-size:11px">${nc} modeles - <span style="color:var(--red)">${np} en attente</span></div>
     </div>`;
-  });
-
-  const pendList=AGENTS.flatMap(a=>(S.data.retours[a.id]||[]).filter(r=>r.statut==='attente').map(r=>({...r,aname:a.name,acolor:a.color})));
-  let pendRows = pendList.length===0 ? `<div class="empty" style="padding:20px">Aucun retour en attente</div>` :
-    pendList.slice(0,8).map(r=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 14px;border-bottom:1px solid var(--bdr)">
-      <div><div style="font-size:12px;font-weight:600">${r.modele}${r.couleur?' - '+r.couleur:''}</div>
-      <div style="font-size:11px;color:var(--ink3)">Demande le ${fd(r.date_demande)}</div></div>
-      <span class="ap" style="background:${r.acolor}">${r.aname}</span>
-    </div>`).join('');
-
+  }).join('');
+  const pl=AGENTS.flatMap(a=>(APP.data.retours[a.id]||[]).filter(r=>r.statut==='attente').map(r=>({...r,an:a.name,ac:a.color})));
+  const pRows=pl.length?pl.slice(0,8).map(r=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 14px;border-bottom:1px solid var(--bdr)">
+    <div><div style="font-size:12px;font-weight:600">${r.modele}${r.couleur?' - '+r.couleur:''}</div>
+    <div style="font-size:11px;color:var(--ink3)">Demande le ${fd(r.date_demande)}</div></div>
+    <span class="ap" style="background:${r.ac}">${r.an}</span></div>`).join('')
+    :'<div class="empty" style="padding:20px">Aucun retour en attente</div>';
   const acts=[
-    ...S.data.envois.map(e=>({d:e.date,t:`Envoi - ${e.modele}${e.couleur?' ('+e.couleur+')':''}`,c:'#c9a84c'})),
-    ...AGENTS.flatMap(a=>(S.data.retours[a.id]||[]).map(r=>({d:r.date_demande,t:`Retour ${r.modele} / ${a.name}`,c:'#3a7bd5'})))
+    ...APP.data.envois.map(e=>({d:e.date,t:`Envoi - ${e.modele}${e.couleur?' ('+e.couleur+')':''}`,c:'#c9a84c'})),
+    ...AGENTS.flatMap(a=>(APP.data.retours[a.id]||[]).map(r=>({d:r.date_demande,t:`Retour ${r.modele} - ${a.name}`,c:'#3a7bd5'})))
   ].sort((a,b)=>(b.d||'').localeCompare(a.d||'')).slice(0,12);
-  const actRows = acts.length===0 ? `<div class="empty" style="padding:16px">Aucune activite.</div>` :
-    acts.map(i=>`<div style="display:flex;gap:10px;padding:8px 14px;border-bottom:1px solid var(--bdr);align-items:flex-start">
-      <div style="width:6px;height:6px;border-radius:50%;background:${i.c};margin-top:5px;flex-shrink:0"></div>
-      <div><div style="font-size:12px">${i.t}</div><div style="font-size:11px;color:var(--ink3)">${fd(i.d)}</div></div>
-    </div>`).join('');
-
+  const aRows=acts.length?acts.map(i=>`<div style="display:flex;gap:10px;padding:8px 14px;border-bottom:1px solid var(--bdr)">
+    <div style="width:6px;height:6px;border-radius:50%;background:${i.c};margin-top:5px;flex-shrink:0"></div>
+    <div><div style="font-size:12px">${i.t}</div><div style="font-size:11px;color:var(--ink3)">${fd(i.d)}</div></div></div>`).join('')
+    :'<div class="empty" style="padding:16px">Aucune activite.</div>';
   el.innerHTML=`
-  <div class="ph">
-    <div><div class="ptitle">Tableau de bord</div><div class="pdesc">Vue generale - synchronise en temps reel</div></div>
-    <div style="display:flex;gap:8px" class="no-print">
-      <button class="btn pr sm" onclick="doPrint('envois')">Imprimer Envois</button>
-      <button class="btn pr sm" onclick="doPrint('retours')">Imprimer Retours</button>
-    </div>
-  </div>
+  <div class="ph"><div><div class="pt">Tableau de bord</div><div class="pd">Vue generale</div></div>
+  <div style="display:flex;gap:8px" class="np">
+    <button class="btn p sm" id="btnPrintEnv">Imprimer Envois</button>
+    <button class="btn p sm" id="btnPrintRet">Imprimer Retours</button>
+  </div></div>
   <div class="stats">
-    <div class="sc"><div class="sv" style="color:var(--gold)">${S.data.envois.length}</div><div class="sl">Envois total</div></div>
-    <div class="sc"><div class="sv" style="color:var(--red)">${pend}</div><div class="sl">Retours en attente</div></div>
-    <div class="sc"><div class="sv" style="color:var(--green)">${recu}</div><div class="sl">Retours recus</div></div>
-    <div class="sc"><div class="sv">${totalC}</div><div class="sl">Modeles en stock</div></div>
+    <div class="sc"><div class="sv" style="color:var(--gold)">${APP.data.envois.length}</div><div class="sl2">Envois</div></div>
+    <div class="sc"><div class="sv" style="color:var(--red)">${pend}</div><div class="sl2">En attente</div></div>
+    <div class="sc"><div class="sv" style="color:var(--grn)">${recv}</div><div class="sl2">Recus</div></div>
+    <div class="sc"><div class="sv">${totC}</div><div class="sl2">Modeles</div></div>
   </div>
   <div class="dg">
-    <div class="card"><div class="chdr"><span class="chtitle">Agents</span></div>${agentsRows}</div>
-    <div class="card"><div class="chdr"><span class="chtitle">Retours en attente</span></div>${pendRows}</div>
+    <div class="card"><div class="chdr"><span class="ct">Agents</span></div>${agRows}</div>
+    <div class="card"><div class="chdr"><span class="ct">Retours en attente</span></div>${pRows}</div>
   </div>
-  <div class="card"><div class="chdr"><span class="chtitle">Activite recente</span></div>${actRows}</div>`;
+  <div class="card"><div class="chdr"><span class="ct">Activite recente</span></div>${aRows}</div>`;
+  qs('#btnPrintEnv')?.addEventListener('click',()=>doPrint('envois'));
+  qs('#btnPrintRet')?.addEventListener('click',()=>doPrint('retours'));
 }
 
-// ---- ENVOIS ----
+// --- ENVOIS ---
 function renderEnvois(){
-  const el=qs('#tab-envois'); if(!el) return;
-  let data=[...S.data.envois];
-  if(S.envoisFilter!=='all') data=data.filter(e=>e.agents.includes(S.envoisFilter));
-  if(S.envoisSearch) data=data.filter(e=>(e.modele+' '+(e.couleur||'')).toLowerCase().includes(S.envoisSearch.toLowerCase()));
+  const el=qs('#tab-envois');if(!el)return;
+  let data=[...APP.data.envois];
+  if(APP.ef!=='all') data=data.filter(e=>e.agents.includes(APP.ef));
+  if(APP.es) data=data.filter(e=>(e.modele+' '+(e.couleur||'')).toLowerCase().includes(APP.es.toLowerCase()));
   data.sort((a,b)=>(b.date||'').localeCompare(a.date||''));
   const mods=[...new Set(MASTER.map(p=>p.modele))].sort();
   const cols=[...new Set(MASTER.map(p=>p.couleur).filter(Boolean))].sort();
-
-  const filterChips = ['<span class="fc'+(S.envoisFilter==='all'?' on':'')+'" onclick="setEnvFilter('all')">Tous</span>',
-    ...AGENTS.map(a=>`<span class="fc${S.envoisFilter===a.id?' on':''}" onclick="setEnvFilter('${a.id}')">${a.name}</span>`)
-  ].join('');
-
-  const rows = data.length ? data.map(e=>{
-    const agentBadges = e.agents.map(id=>{ const a=byId(id); return `<span class="ap" style="background:${a?a.color:'#888'}">${a?a.name:id}</span>`; }).join('');
-    return `<tr>
-      <td>${fd(e.date)}</td><td><strong>${e.modele}</strong></td><td>${e.couleur||'-'}</td>
-      <td><span class="badge ba">${e.pieces} pcs</span></td>
-      <td>${agentBadges}</td>
-      <td style="color:var(--ink3);max-width:120px;font-size:11px">${e.notes||'-'}</td>
-      <td class="no-print" style="white-space:nowrap">
-        <button class="btn xs" onclick="openEnvoiForm('${e.id}')">Editer</button>
-        <button class="btn xs d" onclick="delEnvoi('${e.id}')">Suppr</button>
-      </td></tr>`;
-  }).join('') : `<tr><td colspan="7" class="empty">Aucun envoi.</td></tr>`;
-
+  const fchips=[{v:'all',label:'Tous'},...AGENTS.map(a=>({v:a.id,label:a.name}))].map(f=>
+    `<span class="fc${APP.ef===f.v?' on':''}" data-ef="${f.v}">${f.label}</span>`).join('');
+  const rows=data.length?data.map(e=>`<tr>
+    <td>${fd(e.date)}</td><td><strong>${e.modele}</strong></td><td>${e.couleur||'-'}</td>
+    <td><span class="badge ba">${e.pieces} pcs</span></td>
+    <td>${e.agents.map(agBadge).join('')}</td>
+    <td style="color:var(--ink3);max-width:120px;font-size:11px">${e.notes||'-'}</td>
+    <td class="np" style="white-space:nowrap">
+      <button class="btn xs" data-edit-envoi="${e.id}">Editer</button>
+      <button class="btn xs d" data-del-envoi="${e.id}">Suppr</button>
+    </td></tr>`).join(''):'<tr><td colspan="7" class="empty">Aucun envoi.</td></tr>';
   el.innerHTML=`
-  <div class="ph">
-    <div><div class="ptitle">Envois</div><div class="pdesc">Modeles envoyes aux agents</div></div>
-    <div style="display:flex;gap:8px" class="no-print">
-      <button class="btn pr sm" onclick="doPrint('envois')">Imprimer</button>
-      <button class="btn g sm" onclick="openEnvoiForm('')">+ Nouvel envoi</button>
-    </div>
+  <div class="ph"><div><div class="pt">Envois</div><div class="pd">Modeles envoyes</div></div>
+  <div style="display:flex;gap:8px" class="np">
+    <button class="btn p sm" id="btnPE">Imprimer</button>
+    <button class="btn g sm" id="btnNE">+ Nouvel envoi</button>
+  </div></div>
+  <div id="efz"></div>
+  <div class="fbar" id="envFbar">${fchips}</div>
+  <div class="card"><div class="chdr">
+    <input style="width:190px;font-size:12px" placeholder="Rechercher..." id="envSrch" value="${APP.es}">
+    <span style="font-size:11px;color:var(--ink3)">${data.length} resultat(s)</span>
   </div>
-  <div id="envoi-form-zone"></div>
-  <div class="fbar">${filterChips}</div>
-  <div class="card">
-    <div class="chdr">
-      <input style="width:190px;font-size:12px" placeholder="Rechercher..." id="envoisSearchInp" value="${S.envoisSearch}" oninput="S.envoisSearch=this.value;renderEnvois()">
-      <span style="font-size:11px;color:var(--ink3)">${data.length} resultat(s)</span>
-    </div>
-    <div class="twrap"><table>
-      <thead><tr><th>Date</th><th>Modele</th><th>Couleur</th><th>Pieces</th><th>Agent(s)</th><th>Notes</th><th class="no-print"></th></tr></thead>
-      <tbody>${rows}</tbody>
-    </table></div>
-  </div>`;
-  if(S.envoiFormOpen) injectEnvoiForm(mods,cols);
+  <div class="twrap"><table>
+    <thead><tr><th>Date</th><th>Modele</th><th>Couleur</th><th>Pieces</th><th>Agent(s)</th><th>Notes</th><th class="np"></th></tr></thead>
+    <tbody>${rows}</tbody>
+  </table></div></div>`;
+  // Attach events
+  qs('#btnPE')?.addEventListener('click',()=>doPrint('envois'));
+  qs('#btnNE')?.addEventListener('click',()=>{APP.eopen=true;APP.eid=null;renderEnvois();});
+  qs('#envSrch')?.addEventListener('input',e=>{APP.es=e.target.value;renderEnvois();});
+  qs('#envFbar')?.addEventListener('click',e=>{const ef=e.target.dataset.ef;if(ef){APP.ef=ef;renderEnvois();}});
+  qsa('[data-edit-envoi]').forEach(b=>b.addEventListener('click',()=>{APP.eopen=true;APP.eid=b.dataset.editEnvoi;renderEnvois();}));
+  qsa('[data-del-envoi]').forEach(b=>b.addEventListener('click',()=>{if(!confirm('Supprimer ?'))return;APP.data.envois=APP.data.envois.filter(e=>e.id!==b.dataset.delEnvoi);save();toast('Supprime');renderEnvois();renderDash();}));
+  if(APP.eopen) injectEF(mods,cols);
 }
 
-window.setEnvFilter=function(v){ S.envoisFilter=v; renderEnvois(); };
-window.openEnvoiForm=function(editId){ S.envoiFormOpen=true; S.envoiEditId=editId||null; renderEnvois(); };
-
-function injectEnvoiForm(mods,cols){
-  const z=qs('#envoi-form-zone'); if(!z) return;
-  const e=S.envoiEditId?S.data.envois.find(x=>x.id===S.envoiEditId):null;
-  const agentBtns = AGENTS.map(a=>`<button type="button" class="fc${e&&e.agents.includes(a.id)?' on':''}" data-aid="${a.id}" onclick="this.classList.toggle('on')">${a.name}<br><small style="opacity:.6;font-size:10px">${a.region}</small></button>`).join('');
-  const modOpts = mods.map(m=>`<option value="${m}">`).join('');
-  const colOpts = cols.map(c=>`<option value="${c}">`).join('');
-  z.innerHTML=`<div class="card" style="margin-bottom:14px;padding:16px 18px">
-    <div style="font-size:16px;font-weight:600;margin-bottom:14px">${e?'Modifier envoi':'Nouvel envoi'}</div>
-    <div class="fg"><label class="fl">Agent(s) *</label><div style="display:flex;flex-wrap:wrap;gap:6px">${agentBtns}</div></div>
+function injectEF(mods,cols){
+  const z=qs('#efz');if(!z)return;
+  const e=APP.eid?APP.data.envois.find(x=>x.id===APP.eid):null;
+  const aBtns=AGENTS.map(a=>`<button type="button" class="fc${e&&e.agents.includes(a.id)?' on':''}" data-aid="${a.id}">${a.name}<br><small style="opacity:.6;font-size:10px">${a.region}</small></button>`).join('');
+  const mOpts=mods.map(m=>`<option value="${m}">`).join('');
+  const cOpts=cols.map(c=>`<option value="${c}">`).join('');
+  z.innerHTML=`<div class="card" style="margin-bottom:14px;padding:16px">
+    <div style="font-size:15px;font-weight:600;margin-bottom:12px">${e?'Modifier envoi':'Nouvel envoi'}</div>
+    <div class="fg"><label class="fl">Agent(s) *</label><div style="display:flex;flex-wrap:wrap;gap:6px" id="agPicker">${aBtns}</div></div>
     <div class="fr2">
-      <div class="fg"><label class="fl">Modele *</label><input list="emod" id="ef_mod" value="${e?e.modele:''}" placeholder="ex: Goku"><datalist id="emod">${modOpts}</datalist></div>
-      <div class="fg"><label class="fl">Couleur verre *</label><input list="ecol" id="ef_col" value="${e?e.couleur||'':''}" placeholder="ex: Storm"><datalist id="ecol">${colOpts}</datalist></div>
+      <div class="fg"><label class="fl">Modele *</label><input list="eml" id="ef_m" value="${e?e.modele:''}" placeholder="ex: Goku"><datalist id="eml">${mOpts}</datalist></div>
+      <div class="fg"><label class="fl">Couleur *</label><input list="ecl" id="ef_c" value="${e?e.couleur||'':''}" placeholder="ex: Storm"><datalist id="ecl">${cOpts}</datalist></div>
     </div>
     <div class="fr2">
-      <div class="fg"><label class="fl">Nb pieces *</label><input type="number" id="ef_pcs" min="1" value="${e?e.pieces:''}" placeholder="3"></div>
-      <div class="fg"><label class="fl">Date *</label><input type="date" id="ef_dat" value="${e?e.date:today()}"></div>
+      <div class="fg"><label class="fl">Nb pieces *</label><input type="number" id="ef_p" min="1" value="${e?e.pieces:''}" placeholder="3"></div>
+      <div class="fg"><label class="fl">Date *</label><input type="date" id="ef_d" value="${e?e.date:today()}"></div>
     </div>
-    <div class="fg"><label class="fl">Notes</label><textarea id="ef_notes">${e?e.notes||'':''}</textarea></div>
-    <div style="display:flex;gap:8px;margin-top:4px">
-      <button class="btn g sm" onclick="saveEnvoi()">Enregistrer</button>
-      <button class="btn sm" onclick="cancelEnvoiForm()">Annuler</button>
+    <div class="fg"><label class="fl">Notes</label><textarea id="ef_n">${e?e.notes||'':''}</textarea></div>
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <button class="btn g sm" id="btnSaveE">Enregistrer</button>
+      <button class="btn sm" id="btnCancelE">Annuler</button>
     </div>
   </div>`;
-}
-
-window.cancelEnvoiForm=function(){ S.envoiFormOpen=false; S.envoiEditId=null; renderEnvois(); };
-window.saveEnvoi=async function(){
-  const agents=qsa('[data-aid].on').map(b=>b.dataset.aid);
-  const modele=qs('#ef_mod')?.value.trim();
-  const couleur=qs('#ef_col')?.value.trim();
-  const pieces=parseInt(qs('#ef_pcs')?.value)||0;
-  const date=qs('#ef_dat')?.value;
-  const notes=qs('#ef_notes')?.value.trim();
-  if(!agents.length){toast('Selectionnez au moins un agent');return;}
-  if(!modele){toast('Modele obligatoire');return;}
-  if(pieces<1){toast('Nb pieces obligatoire');return;}
-  if(!date){toast('Date obligatoire');return;}
-  if(S.envoiEditId){
-    const idx=S.data.envois.findIndex(e=>e.id===S.envoiEditId);
-    if(idx>=0) S.data.envois[idx]={...S.data.envois[idx],agents,modele,couleur,pieces,date,notes};
-  } else {
-    S.data.envois.push({id:uid(),agents,modele,couleur,pieces,date,notes});
-    for(const aid of agents){
-      let prod=MASTER.find(p=>p.nom.toLowerCase()===(modele+(couleur?' '+couleur:'')).toLowerCase());
-      if(!prod) prod={id:uid(),nom:modele+(couleur?' '+couleur:''),modele,couleur,categorie:'ICONIC'};
-      if(!S.data.collections[aid]) S.data.collections[aid]=[];
-      if(!S.data.collections[aid].find(p=>p.id===prod.id)) S.data.collections[aid].push({...prod,addedAt:date||today()});
+  qs('#agPicker')?.addEventListener('click',e=>{if(e.target.dataset.aid)e.target.classList.toggle('on');});
+  qs('#btnCancelE')?.addEventListener('click',()=>{APP.eopen=false;APP.eid=null;renderEnvois();});
+  qs('#btnSaveE')?.addEventListener('click',async()=>{
+    const agents=qsa('#agPicker .fc.on').map(b=>b.dataset.aid);
+    const modele=qs('#ef_m')?.value.trim();
+    const couleur=qs('#ef_c')?.value.trim();
+    const pieces=parseInt(qs('#ef_p')?.value)||0;
+    const date=qs('#ef_d')?.value;
+    const notes=qs('#ef_n')?.value.trim();
+    if(!agents.length){toast('Selectionnez un agent');return;}
+    if(!modele){toast('Modele obligatoire');return;}
+    if(pieces<1){toast('Nb pieces obligatoire');return;}
+    if(!date){toast('Date obligatoire');return;}
+    if(APP.eid){
+      const idx=APP.data.envois.findIndex(x=>x.id===APP.eid);
+      if(idx>=0)APP.data.envois[idx]={...APP.data.envois[idx],agents,modele,couleur,pieces,date,notes};
+    } else {
+      APP.data.envois.push({id:uid(),agents,modele,couleur,pieces,date,notes});
+      for(const aid of agents){
+        let prod=MASTER.find(p=>p.nom.toLowerCase()===(modele+(couleur?' '+couleur:'')).toLowerCase());
+        if(!prod)prod={id:uid(),nom:modele+(couleur?' '+couleur:''),modele,couleur,categorie:'ICONIC'};
+        if(!APP.data.collections[aid])APP.data.collections[aid]=[];
+        if(!APP.data.collections[aid].find(p=>p.id===prod.id))APP.data.collections[aid].push({...prod,addedAt:date||today()});
+      }
     }
-  }
-  S.envoiFormOpen=false; S.envoiEditId=null;
-  scheduleSave(); toast('Envoi enregistre');
-  renderEnvois(); renderDashboard(); renderCollections();
-};
-window.delEnvoi=function(id){
-  if(!confirm('Supprimer ?')) return;
-  S.data.envois=S.data.envois.filter(e=>e.id!==id);
-  scheduleSave(); toast('Supprime'); renderEnvois(); renderDashboard();
-};
+    APP.eopen=false;APP.eid=null;
+    save();toast('Envoi enregistre');renderEnvois();renderDash();renderColl();
+  });
+}
 
-// ---- RETOURS ----
+// --- RETOURS ---
 function renderRetours(){
-  const el=qs('#tab-retours'); if(!el) return;
-  const aid=S.agentTab, agent=byId(aid);
-  let data=[...(S.data.retours[aid]||[])];
-  if(S.retourFilter!=='all') data=data.filter(r=>r.statut===S.retourFilter);
-  const rs=(S.retourSearch[aid]||'').toLowerCase();
-  if(rs) data=data.filter(r=>(r.modele+' '+(r.couleur||'')).toLowerCase().includes(rs));
+  const el=qs('#tab-retours');if(!el)return;
+  const aid=APP.aid,agent=byId(aid);
+  let data=[...(APP.data.retours[aid]||[])];
+  if(APP.rf!=='all')data=data.filter(r=>r.statut===APP.rf);
+  const rs=(APP.rs[aid]||'').toLowerCase();
+  if(rs)data=data.filter(r=>(r.modele+' '+(r.couleur||'')).toLowerCase().includes(rs));
   data.sort((a,b)=>(b.date_demande||'').localeCompare(a.date_demande||''));
   const mods=[...new Set(MASTER.map(p=>p.modele))].sort();
-
-  const agentTabs = AGENTS.map(a=>`<button class="at${a.id===aid?' on':''}" onclick="setAgentTab('${a.id}','ret')" style="${a.id===aid?`border-bottom-color:${a.color};color:${a.color}`:''}">${a.name}</button>`).join('');
-
-  let editFormHtml='';
-  if(S.retourEditData && S.retourEditData.aid===aid){
-    const r=S.retourEditData;
-    const modOpts=mods.map(m=>`<option value="${m}">`).join('');
-    editFormHtml=`<div class="ret-inline" style="border-left-color:${agent.color}">
+  const aTabs=AGENTS.map(a=>`<button class="at${a.id===aid?' on':''}" data-agent="${a.id}" data-type="ret" style="${a.id===aid?'border-bottom-color:'+a.color+';color:'+a.color:''}">${a.name}</button>`).join('');
+  const fChips=['all','attente','recu','non_recu'].map((v,i)=>`<span class="fc${APP.rf===v?' on':''}" data-rf="${v}">${['Tous','En attente','Recu','Non recu'][i]}</span>`).join('');
+  const mOpts=mods.map(m=>`<option value="${m}">`).join('');
+  let editHtml='';
+  if(APP.red&&APP.red.aid===aid){
+    const r=APP.red;
+    editHtml=`<div class="ri" style="border-left-color:${agent.color}">
       <div style="font-size:12px;font-weight:600;margin-bottom:10px;color:${agent.color}">Modifier le retour</div>
       <div class="fr2">
-        <div class="fg"><label class="fl">Modele</label><input list="re_ml" id="re_mod" value="${r.modele||''}"><datalist id="re_ml">${modOpts}</datalist></div>
-        <div class="fg"><label class="fl">Couleur</label><input id="re_col" value="${r.couleur||''}"></div>
+        <div class="fg"><label class="fl">Modele</label><input list="re_ml" id="re_m" value="${r.modele||''}"><datalist id="re_ml">${mOpts}</datalist></div>
+        <div class="fg"><label class="fl">Couleur</label><input id="re_c" value="${r.couleur||''}"></div>
       </div>
       <div class="fr2">
-        <div class="fg"><label class="fl">Date</label><input type="date" id="re_dat" value="${r.date_demande||today()}"></div>
-        <div class="fg"><label class="fl">Statut</label><select id="re_stat">
+        <div class="fg"><label class="fl">Date</label><input type="date" id="re_d" value="${r.date_demande||today()}"></div>
+        <div class="fg"><label class="fl">Statut</label><select id="re_s">
           <option value="attente"${(r.statut||'attente')==='attente'?' selected':''}>En attente</option>
           <option value="recu"${r.statut==='recu'?' selected':''}>Recu</option>
           <option value="non_recu"${r.statut==='non_recu'?' selected':''}>Non recu</option>
         </select></div>
       </div>
       <div class="fr2">
-        <div class="fg"><label class="fl">Date reception</label><input type="date" id="re_recep" value="${r.date_reception||''}"></div>
-        <div class="fg"><label class="fl">Notes</label><input id="re_notes" value="${r.notes||''}"></div>
+        <div class="fg"><label class="fl">Date reception</label><input type="date" id="re_r" value="${r.date_reception||''}"></div>
+        <div class="fg"><label class="fl">Notes</label><input id="re_n" value="${r.notes||''}"></div>
       </div>
       <div style="display:flex;gap:8px;margin-top:4px">
-        <button class="btn g sm" onclick="saveRetourEdit('${aid}')">Enregistrer</button>
-        <button class="btn sm" onclick="cancelRetourEdit()">Annuler</button>
+        <button class="btn g sm" id="btnSaveRE">Enregistrer</button>
+        <button class="btn sm" id="btnCancelRE">Annuler</button>
       </div>
     </div>`;
   }
-
-  let newFormHtml='';
-  if(S.retourNewOpen && S.retourNewAid===aid){
-    const modOpts=mods.map(m=>`<option value="${m}">`).join('');
-    newFormHtml=`<div class="ret-inline" style="border-left-color:${agent.color}">
+  let newHtml='';
+  if(APP.rnew&&APP.rnaid===aid){
+    newHtml=`<div class="ri" style="border-left-color:${agent.color}">
       <div style="font-size:12px;font-weight:600;margin-bottom:10px;color:${agent.color}">Nouvelle demande - ${agent.name}</div>
       <div class="fr2">
-        <div class="fg"><label class="fl">Modele *</label><input list="rn_ml" id="rn_mod" placeholder="ex: Goku"><datalist id="rn_ml">${modOpts}</datalist></div>
-        <div class="fg"><label class="fl">Couleur</label><input id="rn_col" placeholder="ex: Storm"></div>
+        <div class="fg"><label class="fl">Modele *</label><input list="rn_ml" id="rn_m" placeholder="ex: Goku"><datalist id="rn_ml">${mOpts}</datalist></div>
+        <div class="fg"><label class="fl">Couleur</label><input id="rn_c" placeholder="ex: Storm"></div>
       </div>
       <div class="fr2">
-        <div class="fg"><label class="fl">Date</label><input type="date" id="rn_dat" value="${today()}"></div>
-        <div class="fg"><label class="fl">Statut</label><select id="rn_stat">
+        <div class="fg"><label class="fl">Date</label><input type="date" id="rn_d" value="${today()}"></div>
+        <div class="fg"><label class="fl">Statut</label><select id="rn_s">
           <option value="attente">En attente</option>
           <option value="recu">Recu</option>
           <option value="non_recu">Non recu</option>
         </select></div>
       </div>
-      <div class="fg"><label class="fl">Notes</label><textarea id="rn_notes"></textarea></div>
+      <div class="fg"><label class="fl">Notes</label><textarea id="rn_n"></textarea></div>
       <div style="display:flex;gap:8px;margin-top:4px">
-        <button class="btn g sm" onclick="saveNewRetour('${aid}')">Enregistrer</button>
-        <button class="btn sm" onclick="cancelNewRetour()">Annuler</button>
+        <button class="btn g sm" id="btnSaveRN">Enregistrer</button>
+        <button class="btn sm" id="btnCancelRN">Annuler</button>
       </div>
     </div>`;
   }
-
-  const rows = data.length ? data.map(r=>{
+  const rows=data.length?data.map(r=>{
     const sb=r.statut==='attente'?'<span class="badge bb">En attente</span>':r.statut==='recu'?'<span class="badge bg">Recu</span>':'<span class="badge br">Non recu</span>';
     return `<tr>
       <td>${fd(r.date_demande)}</td><td><strong>${r.modele}</strong></td><td>${r.couleur||'-'}</td>
       <td>${sb}</td><td>${r.date_reception?fd(r.date_reception):'-'}</td>
-      <td style="color:var(--ink3);max-width:120px;font-size:11px">${r.notes||'-'}</td>
-      <td class="no-print" style="white-space:nowrap">
-        <button class="btn xs s" onclick="markRecu('${aid}','${r.id}')">Recu</button>
-        <button class="btn xs" onclick="editRetour('${aid}','${r.id}')">Editer</button>
-        <button class="btn xs d" onclick="delRetour('${aid}','${r.id}')">Suppr</button>
+      <td style="color:var(--ink3);max-width:110px;font-size:11px">${r.notes||'-'}</td>
+      <td class="np" style="white-space:nowrap">
+        <button class="btn xs s" data-mark-recu="${r.id}">Recu</button>
+        <button class="btn xs" data-edit-ret="${r.id}">Editer</button>
+        <button class="btn xs d" data-del-ret="${r.id}">Suppr</button>
       </td></tr>`;
-  }).join('') : `<tr><td colspan="7" class="empty">Aucune demande.</td></tr>`;
-
+  }).join(''):'<tr><td colspan="7" class="empty">Aucune demande.</td></tr>';
   el.innerHTML=`
-  <div class="ph">
-    <div><div class="ptitle">Retours</div><div class="pdesc">Par agent</div></div>
-    <button class="btn pr sm no-print" onclick="doPrint('retours_${aid}')">Imprimer</button>
-  </div>
-  <div class="atabs">${agentTabs}</div>
-  ${editFormHtml}${newFormHtml}
-  <div class="fbar">
-    <span class="fc${S.retourFilter==='all'?' on':''}" onclick="setRetFilter('all')">Tous</span>
-    <span class="fc${S.retourFilter==='attente'?' on':''}" onclick="setRetFilter('attente')">En attente</span>
-    <span class="fc${S.retourFilter==='recu'?' on':''}" onclick="setRetFilter('recu')">Recu</span>
-    <span class="fc${S.retourFilter==='non_recu'?' on':''}" onclick="setRetFilter('non_recu')">Non recu</span>
-  </div>
-  <div class="card">
-    <div class="chdr">
-      <input style="width:190px;font-size:12px" placeholder="Rechercher..." value="${S.retourSearch[aid]||''}" oninput="S.retourSearch['${aid}']=this.value;renderRetours()">
-      <div style="display:flex;gap:8px;align-items:center">
-        <span style="font-size:11px;color:var(--ink3)">${data.length} resultat(s)</span>
-        <button class="btn g sm no-print" onclick="openNewRetour('${aid}')">+ Nouvelle demande</button>
-      </div>
+  <div class="ph"><div><div class="pt">Retours</div><div class="pd">Par agent</div></div>
+  <button class="btn p sm np" id="btnPR">Imprimer</button></div>
+  <div class="atabs" id="retAgTabs">${aTabs}</div>
+  ${editHtml}${newHtml}
+  <div class="fbar" id="retFbar">${fChips}</div>
+  <div class="card"><div class="chdr">
+    <input style="width:190px;font-size:12px" placeholder="Rechercher..." id="retSrch" value="${APP.rs[aid]||''}">
+    <div style="display:flex;gap:8px;align-items:center">
+      <span style="font-size:11px;color:var(--ink3)">${data.length} resultat(s)</span>
+      <button class="btn g sm np" id="btnNR">+ Nouvelle demande</button>
     </div>
-    <div class="twrap"><table>
-      <thead><tr><th>Date</th><th>Modele</th><th>Couleur</th><th>Statut</th><th>Reception</th><th>Notes</th><th class="no-print"></th></tr></thead>
-      <tbody>${rows}</tbody>
-    </table></div>
-  </div>`;
+  </div>
+  <div class="twrap"><table>
+    <thead><tr><th>Date</th><th>Modele</th><th>Couleur</th><th>Statut</th><th>Reception</th><th>Notes</th><th class="np"></th></tr></thead>
+    <tbody>${rows}</tbody>
+  </table></div></div>`;
+  // events
+  qs('#btnPR')?.addEventListener('click',()=>doPrint('retours_'+aid));
+  qs('#btnNR')?.addEventListener('click',()=>{APP.rnew=true;APP.rnaid=aid;APP.red=null;renderRetours();});
+  qs('#retSrch')?.addEventListener('input',e=>{APP.rs[aid]=e.target.value;renderRetours();});
+  qs('#retAgTabs')?.addEventListener('click',e=>{
+    const btn=e.target.closest('[data-agent]');
+    if(btn){APP.aid=btn.dataset.agent;APP.red=null;APP.rnew=false;renderRetours();}
+  });
+  qs('#retFbar')?.addEventListener('click',e=>{const rf=e.target.dataset.rf;if(rf){APP.rf=rf;renderRetours();}});
+  qsa('[data-mark-recu]').forEach(b=>b.addEventListener('click',()=>{
+    const r=(APP.data.retours[aid]||[]).find(x=>x.id===b.dataset.markRecu);if(!r)return;
+    r.statut='recu';r.date_reception=r.date_reception||today();
+    rmColl(aid,r.modele,r.couleur);save();toast(r.modele+' recu');renderRetours();renderDash();renderColl();
+  }));
+  qsa('[data-edit-ret]').forEach(b=>b.addEventListener('click',()=>{
+    const r=(APP.data.retours[aid]||[]).find(x=>x.id===b.dataset.editRet);if(!r)return;
+    APP.red={...r,aid};APP.rnew=false;renderRetours();
+  }));
+  qsa('[data-del-ret]').forEach(b=>b.addEventListener('click',()=>{
+    if(!confirm('Supprimer ?'))return;
+    APP.data.retours[aid]=(APP.data.retours[aid]||[]).filter(r=>r.id!==b.dataset.delRet);
+    save();toast('Supprime');renderRetours();renderDash();
+  }));
+  qs('#btnCancelRE')?.addEventListener('click',()=>{APP.red=null;renderRetours();});
+  qs('#btnSaveRE')?.addEventListener('click',()=>{
+    const r=APP.red;
+    const idx=(APP.data.retours[aid]||[]).findIndex(x=>x.id===r.id);if(idx<0)return;
+    const ns=qs('#re_s')?.value||r.statut;
+    const upd={...APP.data.retours[aid][idx],modele:qs('#re_m')?.value.trim()||r.modele,couleur:qs('#re_c')?.value.trim()||'',date_demande:qs('#re_d')?.value||r.date_demande,statut:ns,date_reception:qs('#re_r')?.value||'',notes:qs('#re_n')?.value.trim()||''};
+    if(ns==='recu'&&r.statut!=='recu'){rmColl(aid,upd.modele,upd.couleur);toast('Recu - retire');}
+    APP.data.retours[aid][idx]=upd;APP.red=null;save();renderRetours();renderDash();renderColl();
+  });
+  qs('#btnCancelRN')?.addEventListener('click',()=>{APP.rnew=false;renderRetours();});
+  qs('#btnSaveRN')?.addEventListener('click',()=>{
+    const modele=qs('#rn_m')?.value.trim();
+    if(!modele){toast('Modele obligatoire');return;}
+    const couleur=qs('#rn_c')?.value.trim()||'';
+    const date=qs('#rn_d')?.value||today();
+    const statut=qs('#rn_s')?.value||'attente';
+    const notes=qs('#rn_n')?.value.trim()||'';
+    if(!APP.data.retours[aid])APP.data.retours[aid]=[];
+    APP.data.retours[aid].push({id:uid(),modele,couleur,statut,date_demande:date,date_reception:statut==='recu'?today():'',notes});
+    if(statut==='recu')rmColl(aid,modele,couleur);
+    APP.rnew=false;save();toast('Retour enregistre');renderRetours();renderDash();renderColl();
+  });
 }
 
-window.setRetFilter=function(v){ S.retourFilter=v; renderRetours(); };
-window.setAgentTab=function(id,type){
-  S.agentTab=id;
-  if(type==='ret'){ S.retourEditData=null; S.retourNewOpen=false; renderRetours(); }
-  else { S.retourForms={}; renderCollections(); }
-};
-window.openNewRetour=function(aid){ S.retourNewOpen=true; S.retourNewAid=aid; S.retourEditData=null; renderRetours(); };
-window.cancelNewRetour=function(){ S.retourNewOpen=false; renderRetours(); };
-window.cancelRetourEdit=function(){ S.retourEditData=null; renderRetours(); };
-
-window.saveNewRetour=function(aid){
-  const modele=qs('#rn_mod')?.value.trim();
-  const couleur=qs('#rn_col')?.value.trim()||'';
-  const date=qs('#rn_dat')?.value||today();
-  const statut=qs('#rn_stat')?.value||'attente';
-  const notes=qs('#rn_notes')?.value.trim()||'';
-  if(!modele){toast('Modele obligatoire');return;}
-  if(!S.data.retours[aid]) S.data.retours[aid]=[];
-  S.data.retours[aid].push({id:uid(),modele,couleur,statut,date_demande:date,date_reception:statut==='recu'?today():'',notes});
-  if(statut==='recu') removeFromColl(aid,modele,couleur);
-  S.retourNewOpen=false;
-  scheduleSave(); toast('Retour enregistre');
-  renderRetours(); renderDashboard(); renderCollections();
-};
-
-window.editRetour=function(aid,rid){
-  const r=(S.data.retours[aid]||[]).find(x=>x.id===rid);
-  if(!r) return;
-  S.retourEditData={...r,aid}; S.retourNewOpen=false; renderRetours();
-};
-window.saveRetourEdit=function(aid){
-  const r=S.retourEditData;
-  const idx=(S.data.retours[aid]||[]).findIndex(x=>x.id===r.id);
-  if(idx<0) return;
-  const newStatut=qs('#re_stat')?.value||r.statut;
-  const updated={...S.data.retours[aid][idx],
-    modele:qs('#re_mod')?.value.trim()||r.modele,
-    couleur:qs('#re_col')?.value.trim()||'',
-    date_demande:qs('#re_dat')?.value||r.date_demande,
-    statut:newStatut,
-    date_reception:qs('#re_recep')?.value||'',
-    notes:qs('#re_notes')?.value.trim()||''
-  };
-  if(newStatut==='recu'&&r.statut!=='recu'){ removeFromColl(aid,updated.modele,updated.couleur); toast('Recu - retire de la collection'); }
-  S.data.retours[aid][idx]=updated; S.retourEditData=null;
-  scheduleSave(); renderRetours(); renderDashboard(); renderCollections();
-};
-window.markRecu=function(aid,rid){
-  const r=(S.data.retours[aid]||[]).find(x=>x.id===rid); if(!r) return;
-  r.statut='recu'; r.date_reception=r.date_reception||today();
-  removeFromColl(aid,r.modele,r.couleur);
-  scheduleSave(); toast(r.modele+' recu - retire de la collection');
-  renderRetours(); renderDashboard(); renderCollections();
-};
-window.delRetour=function(aid,rid){
-  if(!confirm('Supprimer ?')) return;
-  S.data.retours[aid]=(S.data.retours[aid]||[]).filter(r=>r.id!==rid);
-  scheduleSave(); toast('Supprime'); renderRetours(); renderDashboard();
-};
-function removeFromColl(aid,modele,couleur){
+function rmColl(aid,modele,couleur){
   const nm=modele.toLowerCase()+'_'+(couleur||'').toLowerCase();
-  S.data.collections[aid]=(S.data.collections[aid]||[]).filter(p=>(p.modele.toLowerCase()+'_'+(p.couleur||'').toLowerCase())!==nm);
+  APP.data.collections[aid]=(APP.data.collections[aid]||[]).filter(p=>(p.modele.toLowerCase()+'_'+(p.couleur||'').toLowerCase())!==nm);
 }
 
-// ---- COLLECTIONS ----
-function renderCollections(){
-  const el=qs('#tab-collections'); if(!el) return;
-  const aid=S.agentTab, agent=byId(aid);
-  const coll=[...(S.data.collections[aid]||[])];
-  const srch=(S.collSearch[aid]||'').toLowerCase();
-  const cat=S.collCat[aid]||'';
-  let filtered=coll.filter(p=>(!srch||(p.modele+' '+p.couleur).toLowerCase().includes(srch))&&(!cat||p.categorie===cat));
-  filtered.sort((a,b)=>a.modele.localeCompare(b.modele)||(a.couleur||'').localeCompare(b.couleur||''));
-  const rf=S.retourForms[aid]||{};
-
-  const agentTabs = AGENTS.map(a=>`<button class="at${a.id===aid?' on':''}" onclick="setAgentTab('${a.id}','coll')" style="${a.id===aid?`border-bottom-color:${a.color};color:${a.color}`:''}">${a.name} <span style="font-size:11px;opacity:.6">(${(S.data.collections[a.id]||[]).length})</span></button>`).join('');
-
-  let retourFormHtml='';
+// --- COLLECTIONS ---
+function renderColl(){
+  const el=qs('#tab-collections');if(!el)return;
+  const aid=APP.aid,agent=byId(aid);
+  const coll=[...(APP.data.collections[aid]||[])];
+  const srch=(APP.cs[aid]||'').toLowerCase();
+  const cat=APP.cc[aid]||'';
+  let filt=coll.filter(p=>(!srch||(p.modele+' '+p.couleur).toLowerCase().includes(srch))&&(!cat||p.categorie===cat));
+  filt.sort((a,b)=>a.modele.localeCompare(b.modele)||(a.couleur||'').localeCompare(b.couleur||''));
+  const rf=APP.forms[aid]||{};
+  const aTabs=AGENTS.map(a=>`<button class="at${a.id===aid?' on':''}" data-agent="${a.id}" data-type="coll" style="${a.id===aid?'border-bottom-color:'+a.color+';color:'+a.color:''}">${a.name} <span style="font-size:11px;opacity:.6">(${(APP.data.collections[a.id]||[]).length})</span></button>`).join('');
+  const catOpts=['ICONIC','LAST CHANCE','ORIGIN','STUDIO','COLLAB','GOODIES'].map(c=>`<option value="${c}"${cat===c?' selected':''}>${c}</option>`).join('');
+  const mastOpts=MASTER.filter(p=>!coll.find(x=>x.id===p.id)).map(p=>`<option value="${p.nom}">`).join('');
+  let rfHtml='';
   if(rf.open){
-    retourFormHtml=`<div class="ret-inline" style="border-left-color:${agent.color}">
+    rfHtml=`<div class="ri" style="border-left-color:${agent.color}">
       <div style="font-size:12px;font-weight:600;margin-bottom:10px;color:${agent.color}">Retour - ${rf.modele}${rf.couleur?' - '+rf.couleur:''}</div>
       <div class="fr2">
-        <div class="fg"><label class="fl">Date demande</label><input type="date" id="rf_dat" value="${today()}"></div>
-        <div class="fg"><label class="fl">Statut</label><select id="rf_stat">
+        <div class="fg"><label class="fl">Date demande</label><input type="date" id="rf_d" value="${today()}"></div>
+        <div class="fg"><label class="fl">Statut</label><select id="rf_s">
           <option value="attente">En attente</option>
           <option value="recu">Recu</option>
           <option value="non_recu">Non recu</option>
         </select></div>
       </div>
       <div class="fr2">
-        <div class="fg"><label class="fl">Date reception</label><input type="date" id="rf_recep"></div>
-        <div class="fg"><label class="fl">Notes</label><input id="rf_notes" placeholder="Facultatif"></div>
+        <div class="fg"><label class="fl">Date reception</label><input type="date" id="rf_r"></div>
+        <div class="fg"><label class="fl">Notes</label><input id="rf_n" placeholder="Facultatif"></div>
       </div>
       <div style="display:flex;gap:8px;margin-top:4px">
-        <button class="btn g sm" onclick="submitCollRetour('${aid}')">Enregistrer</button>
-        <button class="btn sm" onclick="cancelCollRetour('${aid}')">Annuler</button>
+        <button class="btn g sm" id="btnSaveRF">Enregistrer</button>
+        <button class="btn sm" id="btnCancelRF">Annuler</button>
       </div>
     </div>`;
   }
-
-  const catOpts = ['ICONIC','LAST CHANCE','ORIGIN','STUDIO','COLLAB','GOODIES'].map(c=>`<option value="${c}"${cat===c?' selected':''}>${c}</option>`).join('');
-  const mastOpts = MASTER.filter(p=>!(S.data.collections[aid]||[]).find(x=>x.id===p.id)).map(p=>`<option value="${p.nom}">`).join('');
-
-  const rows = filtered.length ? filtered.map(p=>`<tr>
+  const rows=filt.length?filt.map(p=>`<tr>
     <td><strong>${p.modele}</strong></td><td>${p.couleur||'-'}</td>
     <td>${catPill(p.categorie)}</td>
     <td style="color:var(--ink3);font-size:11px">${fd(p.addedAt)}</td>
-    <td class="no-print" style="white-space:nowrap">
-      <button class="btn xs" style="color:var(--gold);border-color:var(--gold-l);background:var(--gold-f)" onclick="openCollRetour('${aid}','${p.id}')">Retour</button>
-      <button class="btn xs d" onclick="removeProd('${aid}','${p.id}')">Suppr</button>
-    </td></tr>`).join('') : `<tr><td colspan="5" class="empty">Aucun modele.</td></tr>`;
-
+    <td class="np" style="white-space:nowrap">
+      <button class="btn xs" style="color:var(--gold);border-color:var(--gol);background:var(--gof)" data-open-ret="${p.id}">Retour</button>
+      <button class="btn xs d" data-del-prod="${p.id}">Suppr</button>
+    </td></tr>`).join(''):'<tr><td colspan="5" class="empty">Aucun modele.</td></tr>';
   el.innerHTML=`
-  <div class="ph">
-    <div><div class="ptitle">Collections</div><div class="pdesc">${agent.name} - ${filtered.length} / ${coll.length} modeles</div></div>
-    <button class="btn pr sm no-print" onclick="doPrint('coll_${aid}')">Imprimer</button>
+  <div class="ph"><div><div class="pt">Collections</div><div class="pd">${agent.name} - ${filt.length} / ${coll.length} modeles</div></div>
+  <button class="btn p sm np" id="btnPC">Imprimer</button></div>
+  <div class="atabs" id="collAgTabs">${aTabs}</div>
+  ${rfHtml}
+  <div class="card"><div class="chdr" style="flex-wrap:wrap;gap:8px">
+    <input style="width:180px;font-size:12px" placeholder="Rechercher..." id="collSrch" value="${APP.cs[aid]||''}">
+    <select style="width:148px;font-size:12px" id="collCat">
+      <option value="">Toutes categories</option>${catOpts}
+    </select>
+    <span style="font-size:11px;color:var(--ink3)">${filt.length} / ${coll.length}</span>
   </div>
-  <div class="atabs">${agentTabs}</div>
-  ${retourFormHtml}
-  <div class="card">
-    <div class="chdr" style="flex-wrap:wrap;gap:8px">
-      <input style="width:180px;font-size:12px" placeholder="Rechercher..." value="${S.collSearch[aid]||''}" oninput="S.collSearch['${aid}']=this.value;renderCollections()">
-      <select style="width:148px;font-size:12px" onchange="S.collCat['${aid}']=this.value;renderCollections()">
-        <option value="">Toutes categories</option>${catOpts}
-      </select>
-      <span style="font-size:11px;color:var(--ink3)">${filtered.length} / ${coll.length}</span>
-    </div>
-    <div class="twrap"><table>
-      <thead><tr><th>Modele</th><th>Couleur</th><th>Categorie</th><th>Ajoute le</th><th class="no-print" style="width:130px"></th></tr></thead>
-      <tbody>${rows}</tbody>
-    </table></div>
-    <div style="padding:10px 14px;border-top:1px solid var(--bdr);display:flex;gap:8px;align-items:center;flex-wrap:wrap" class="no-print">
-      <span style="font-size:12px;color:var(--ink2)">Ajouter :</span>
-      <input list="mastList" id="addProdInp" style="flex:1;min-width:160px;font-size:12px" placeholder="Nom du produit...">
-      <datalist id="mastList">${mastOpts}</datalist>
-      <button class="btn s sm" onclick="addProd('${aid}')">+ Ajouter</button>
-    </div>
-  </div>`;
+  <div class="twrap"><table>
+    <thead><tr><th>Modele</th><th>Couleur</th><th>Categorie</th><th>Ajoute le</th><th class="np" style="width:130px"></th></tr></thead>
+    <tbody>${rows}</tbody>
+  </table></div>
+  <div style="padding:10px 14px;border-top:1px solid var(--bdr);display:flex;gap:8px;align-items:center;flex-wrap:wrap" class="np">
+    <span style="font-size:12px;color:var(--ink2)">Ajouter :</span>
+    <input list="mastList" id="addPI" style="flex:1;min-width:160px;font-size:12px" placeholder="Nom du produit...">
+    <datalist id="mastList">${mastOpts}</datalist>
+    <button class="btn s sm" id="btnAddP">+ Ajouter</button>
+  </div></div>`;
+  // events
+  qs('#btnPC')?.addEventListener('click',()=>doPrint('coll_'+aid));
+  qs('#collAgTabs')?.addEventListener('click',e=>{
+    const btn=e.target.closest('[data-agent]');
+    if(btn){APP.aid=btn.dataset.agent;APP.forms={};renderColl();}
+  });
+  qs('#collSrch')?.addEventListener('input',e=>{APP.cs[aid]=e.target.value;renderColl();});
+  qs('#collCat')?.addEventListener('change',e=>{APP.cc[aid]=e.target.value;renderColl();});
+  qsa('[data-open-ret]').forEach(b=>b.addEventListener('click',()=>{
+    const p=coll.find(x=>x.id===b.dataset.openRet);if(!p)return;
+    APP.forms[aid]={open:true,modele:p.modele,couleur:p.couleur||'',prodId:p.id};
+    renderColl();setTimeout(()=>qs('#rf_d')?.focus(),50);
+  }));
+  qsa('[data-del-prod]').forEach(b=>b.addEventListener('click',()=>{
+    if(!confirm('Retirer ce modele ?'))return;
+    APP.data.collections[aid]=coll.filter(p=>p.id!==b.dataset.delProd);
+    save();toast('Retire');renderColl();renderDash();
+  }));
+  qs('#btnCancelRF')?.addEventListener('click',()=>{APP.forms[aid]=null;renderColl();});
+  qs('#btnSaveRF')?.addEventListener('click',()=>{
+    const r=APP.forms[aid];if(!r)return;
+    const date=qs('#rf_d')?.value||today();
+    const statut=qs('#rf_s')?.value||'attente';
+    const drec=qs('#rf_r')?.value||'';
+    const notes=qs('#rf_n')?.value||'';
+    if(!APP.data.retours[aid])APP.data.retours[aid]=[];
+    APP.data.retours[aid].push({id:uid(),modele:r.modele,couleur:r.couleur,statut,date_demande:date,date_reception:drec,notes});
+    if(statut==='recu')APP.data.collections[aid]=coll.filter(p=>p.id!==r.prodId);
+    APP.forms[aid]=null;save();toast('Retour enregistre'+(statut==='recu'?' (retire)':''));
+    renderColl();renderRetours();renderDash();
+  });
+  qs('#btnAddP')?.addEventListener('click',()=>{
+    const inp=qs('#addPI');if(!inp||!inp.value.trim())return;
+    const val=inp.value.trim();
+    const prod=MASTER.find(p=>p.nom.toLowerCase()===val.toLowerCase());
+    if(!prod){toast('Produit introuvable');return;}
+    if(coll.find(p=>p.id===prod.id)){toast('Deja dans la collection');return;}
+    APP.data.collections[aid].push({...prod,addedAt:today()});
+    save();inp.value='';toast(prod.nom+' ajoute');renderColl();
+  });
 }
 
-window.openCollRetour=function(aid,prodId){
-  const p=(S.data.collections[aid]||[]).find(x=>x.id===prodId); if(!p) return;
-  S.retourForms[aid]={open:true,modele:p.modele,couleur:p.couleur||'',prodId};
-  renderCollections();
-  setTimeout(()=>qs('#rf_dat')?.focus(),50);
-};
-window.cancelCollRetour=function(aid){ S.retourForms[aid]=null; renderCollections(); };
-window.submitCollRetour=function(aid){
-  const rf=S.retourForms[aid]; if(!rf) return;
-  const date=qs('#rf_dat')?.value||today();
-  const statut=qs('#rf_stat')?.value||'attente';
-  const date_reception=qs('#rf_recep')?.value||'';
-  const notes=qs('#rf_notes')?.value||'';
-  if(!S.data.retours[aid]) S.data.retours[aid]=[];
-  S.data.retours[aid].push({id:uid(),modele:rf.modele,couleur:rf.couleur,statut,date_demande:date,date_reception,notes});
-  if(statut==='recu') S.data.collections[aid]=(S.data.collections[aid]||[]).filter(p=>p.id!==rf.prodId);
-  S.retourForms[aid]=null;
-  scheduleSave(); toast('Retour enregistre'+(statut==='recu'?' (retire)':''));
-  renderCollections(); renderRetours(); renderDashboard();
-};
-window.removeProd=function(aid,pid){
-  if(!confirm('Retirer ce modele ?')) return;
-  S.data.collections[aid]=(S.data.collections[aid]||[]).filter(p=>p.id!==pid);
-  scheduleSave(); toast('Retire'); renderCollections(); renderDashboard();
-};
-window.addProd=function(aid){
-  const inp=qs('#addProdInp'); if(!inp||!inp.value.trim()) return;
-  const val=inp.value.trim();
-  const prod=MASTER.find(p=>p.nom.toLowerCase()===val.toLowerCase());
-  if(!prod){toast('Produit introuvable');return;}
-  if((S.data.collections[aid]||[]).find(p=>p.id===prod.id)){toast('Deja dans la collection');return;}
-  S.data.collections[aid].push({...prod,addedAt:today()});
-  scheduleSave(); inp.value=''; toast(prod.nom+' ajoute'); renderCollections();
-};
-
-// ---- AGENTS ----
+// --- AGENTS ---
 function renderAgents(){
-  const el=qs('#tab-agents'); if(!el) return;
-  const cards = AGENTS.map(a=>{
-    const nc=(S.data.collections[a.id]||[]).length;
-    const np=(S.data.retours[a.id]||[]).filter(r=>r.statut==='attente').length;
-    const nr=(S.data.retours[a.id]||[]).filter(r=>r.statut==='recu').length;
+  const el=qs('#tab-agents');if(!el)return;
+  const cards=AGENTS.map(a=>{
+    const nc=(APP.data.collections[a.id]||[]).length;
+    const np=(APP.data.retours[a.id]||[]).filter(r=>r.statut==='attente').length;
+    const nr=(APP.data.retours[a.id]||[]).filter(r=>r.statut==='recu').length;
     return `<div class="card" style="border-top:4px solid ${a.color}">
       <div style="display:flex;align-items:center;gap:12px;padding:16px 16px 12px">
-        <div style="width:42px;height:42px;border-radius:50%;background:${a.color};display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:600;color:#fff;flex-shrink:0">${a.name[0]}</div>
+        <div style="width:42px;height:42px;border-radius:50%;background:${a.color};display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:600;color:#fff">${a.name[0]}</div>
         <div><div style="font-weight:600;font-size:14px">${a.name}</div><div style="font-size:11px;color:var(--ink3)">${a.region}</div></div>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;padding:0 14px 14px">
-        <div style="background:var(--gold-f);border-radius:8px;padding:10px;text-align:center"><div style="font-size:20px;font-weight:700;color:var(--gold)">${nc}</div><div style="font-size:10px;color:var(--ink3);text-transform:uppercase">Modeles</div></div>
-        <div style="background:var(--red-l);border-radius:8px;padding:10px;text-align:center"><div style="font-size:20px;font-weight:700;color:var(--red)">${np}</div><div style="font-size:10px;color:var(--ink3);text-transform:uppercase">Attente</div></div>
-        <div style="background:var(--green-l);border-radius:8px;padding:10px;text-align:center"><div style="font-size:20px;font-weight:700;color:var(--green)">${nr}</div><div style="font-size:10px;color:var(--ink3);text-transform:uppercase">Recus</div></div>
+        <div style="background:var(--gof);border-radius:8px;padding:10px;text-align:center"><div style="font-size:20px;font-weight:700;color:var(--gold)">${nc}</div><div style="font-size:10px;color:var(--ink3);text-transform:uppercase">Modeles</div></div>
+        <div style="background:var(--rel);border-radius:8px;padding:10px;text-align:center"><div style="font-size:20px;font-weight:700;color:var(--red)">${np}</div><div style="font-size:10px;color:var(--ink3);text-transform:uppercase">Attente</div></div>
+        <div style="background:var(--grl);border-radius:8px;padding:10px;text-align:center"><div style="font-size:20px;font-weight:700;color:var(--grn)">${nr}</div><div style="font-size:10px;color:var(--ink3);text-transform:uppercase">Recus</div></div>
       </div>
       <div style="padding:0 14px 14px;display:flex;gap:8px">
-        <button class="btn sm" style="flex:1;justify-content:center" onclick="setAgentTab('${a.id}','coll');goTab('collections',document.querySelectorAll('.ntab')[3])">Collection</button>
-        <button class="btn sm" style="flex:1;justify-content:center" onclick="setAgentTab('${a.id}','ret');goTab('retours',document.querySelectorAll('.ntab')[2])">Retours</button>
+        <button class="btn sm" style="flex:1" data-goto-coll="${a.id}">Collection</button>
+        <button class="btn sm" style="flex:1" data-goto-ret="${a.id}">Retours</button>
       </div>
     </div>`;
   }).join('');
-  el.innerHTML=`<div class="ph"><div><div class="ptitle">Agents</div></div></div><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px">${cards}</div>`;
+  el.innerHTML=`<div class="ph"><div><div class="pt">Agents</div></div></div><div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px">${cards}</div>`;
+  qsa('[data-goto-coll]').forEach(b=>b.addEventListener('click',()=>{
+    APP.aid=b.dataset.gotoColl;APP.forms={};
+    qs('[data-tab="collections"]')?.click();
+  }));
+  qsa('[data-goto-ret]').forEach(b=>b.addEventListener('click',()=>{
+    APP.aid=b.dataset.gotoRet;APP.red=null;APP.rnew=false;
+    qs('[data-tab="retours"]')?.click();
+  }));
 }
 
-// ---- PRINT ----
-window.doPrint=function(type){
+// --- PRINT ---
+function doPrint(type){
   const now=new Date().toLocaleDateString('fr-FR',{day:'2-digit',month:'long',year:'numeric'});
   const css='<style>body{font-family:Arial,sans-serif;font-size:12px}table{width:100%;border-collapse:collapse}th{background:#1a1a2e;color:#fff;padding:7px 9px;text-align:left;font-size:11px}td{padding:6px 9px;border-bottom:1px solid #eee}.hd{text-align:center;margin-bottom:14px;padding-bottom:12px;border-bottom:2px solid #c9a84c}.hd h2{font-size:20px;color:#1a1a2e}.hd p{font-size:11px;color:#666}@page{margin:1.5cm}</style>';
   let body='';
   if(type==='envois'){
-    const rows=S.data.envois.slice().sort((a,b)=>(b.date||'').localeCompare(a.date||'')).slice(0,50);
+    const rows=APP.data.envois.slice().sort((a,b)=>(b.date||'').localeCompare(a.date||'')).slice(0,50);
     body=`<div class="hd"><h2>Envois</h2><p>${now} - Eyes Gang CRM</p></div><table><thead><tr><th>Date</th><th>Modele</th><th>Couleur</th><th>Pieces</th><th>Agent(s)</th><th>Notes</th></tr></thead><tbody>${rows.map(e=>`<tr><td>${fd(e.date)}</td><td>${e.modele}</td><td>${e.couleur||'-'}</td><td>${e.pieces} pcs</td><td>${e.agents.map(id=>byId(id)?.name||id).join(', ')}</td><td>${e.notes||'-'}</td></tr>`).join('')}</tbody></table>`;
   } else if(type==='retours'){
-    const rows=AGENTS.flatMap(a=>(S.data.retours[a.id]||[]).map(r=>({...r,an:a.name}))).sort((a,b)=>(b.date_demande||'').localeCompare(a.date_demande||'')).slice(0,50);
+    const rows=AGENTS.flatMap(a=>(APP.data.retours[a.id]||[]).map(r=>({...r,an:a.name}))).sort((a,b)=>(b.date_demande||'').localeCompare(a.date_demande||'')).slice(0,50);
     body=`<div class="hd"><h2>Retours</h2><p>${now} - Eyes Gang CRM</p></div><table><thead><tr><th>Date</th><th>Modele</th><th>Couleur</th><th>Agent</th><th>Statut</th><th>Reception</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${fd(r.date_demande)}</td><td>${r.modele}</td><td>${r.couleur||'-'}</td><td>${r.an}</td><td>${{attente:'En attente',recu:'Recu',non_recu:'Non recu'}[r.statut]}</td><td>${r.date_reception?fd(r.date_reception):'-'}</td></tr>`).join('')}</tbody></table>`;
   } else if(type.startsWith('retours_')){
-    const aid=type.replace('retours_',''), a=byId(aid);
-    const rows=(S.data.retours[aid]||[]).slice().sort((a,b)=>(b.date_demande||'').localeCompare(a.date_demande||''));
+    const aid=type.slice(8),a=byId(aid);
+    const rows=(APP.data.retours[aid]||[]).slice().sort((a,b)=>(b.date_demande||'').localeCompare(a.date_demande||''));
     body=`<div class="hd"><h2>Retours - ${a?a.name:''}</h2><p>${now} - Eyes Gang CRM</p></div><table><thead><tr><th>Date</th><th>Modele</th><th>Couleur</th><th>Statut</th><th>Reception</th><th>Notes</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${fd(r.date_demande)}</td><td>${r.modele}</td><td>${r.couleur||'-'}</td><td>${{attente:'En attente',recu:'Recu',non_recu:'Non recu'}[r.statut]}</td><td>${r.date_reception?fd(r.date_reception):'-'}</td><td>${r.notes||'-'}</td></tr>`).join('')}</tbody></table>`;
   } else if(type.startsWith('coll_')){
-    const aid=type.replace('coll_',''), a=byId(aid);
-    const rows=(S.data.collections[aid]||[]).slice().sort((x,y)=>x.modele.localeCompare(y.modele));
+    const aid=type.slice(5),a=byId(aid);
+    const rows=(APP.data.collections[aid]||[]).slice().sort((x,y)=>x.modele.localeCompare(y.modele));
     body=`<div class="hd"><h2>Collection - ${a?a.name:''}</h2><p>${now} - ${rows.length} modeles</p></div><table><thead><tr><th>Modele</th><th>Couleur</th><th>Categorie</th><th>Ajoute le</th></tr></thead><tbody>${rows.map(p=>`<tr><td>${p.modele}</td><td>${p.couleur||'-'}</td><td>${p.categorie}</td><td>${fd(p.addedAt)}</td></tr>`).join('')}</tbody></table>`;
   }
-  if(!body) return;
+  if(!body)return;
   const w=window.open('','_blank');
   w.document.write(`<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Eyes Gang CRM</title>${css}</head><body>${body}</body></html>`);
-  w.document.close(); setTimeout(()=>{ w.focus(); w.print(); },400);
-};
+  w.document.close();setTimeout(()=>{w.focus();w.print();},400);
+}
 
 </script>
 </body>
