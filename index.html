@@ -737,12 +737,16 @@ function renderFactu(){
       totalCA+=c.caht;
       totalComm+=c.comm;
       const commColor=c.comm>0?'var(--grn)':c.comm<0?'var(--red)':'var(--ink3)';
+      const leslieCols=isLeslie?`
+        <td style="text-align:right;color:var(--blu);font-size:13px;font-weight:500">${fmt(c.cahSami*0.02)} EUR</td>
+        <td style="text-align:right;color:var(--grn);font-size:13px;font-weight:500">${fmt(c.cahPa*0.02)} EUR</td>`:'';
       rows.push(`<tr>
         <td style="font-weight:500;width:110px">${moisLabels[m-1]}${isLeslie&&m===8?' <span style="font-size:10px;color:var(--ink3)">(sans fixe)</span>':''}</td>
         <td><input class="fi-input" type="number" step="0.01" min="0"
           data-field="caht" data-agent="${agentId}" data-mois="${m}" data-annee="${selYear}"
           value="${c.caht||''}" placeholder="0.00"
           style="max-width:140px;text-align:right"></td>
+        ${leslieCols}
         <td style="color:var(--ink3);font-size:12px">
           - <input class="fi-input" type="number" step="0.01" min="0"
             data-field="fraisPort" data-agent="${agentId}" data-mois="${m}" data-annee="${selYear}"
@@ -779,6 +783,7 @@ function renderFactu(){
         <thead><tr>
           <th>Mois</th>
           <th>CA HT</th>
+          ${isLeslie?'<th style="color:#3a7bd5">2% CA Sami</th><th style="color:#3d9970">2% CA PA</th>':''}
           <th>Frais de port</th>
           <th>Autres frais</th>
           <th style="text-align:right">Commission</th>
@@ -787,6 +792,7 @@ function renderFactu(){
         <tfoot><tr style="background:var(--bg);font-weight:700;border-top:2px solid var(--bdr)">
           <td>TOTAL ${selYear}</td>
           <td style="font-weight:700">${fmt(totalCA)} EUR</td>
+          ${isLeslie?'<td colspan="2"></td>':''}
           <td colspan="2"></td>
           <td style="text-align:right;color:${totalComm>=0?'var(--grn)':'var(--red)'};font-size:15px">${fmt(totalComm)} EUR</td>
         </tr></tfoot>
